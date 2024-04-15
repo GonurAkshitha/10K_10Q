@@ -1,0 +1,79 @@
+{
+  "name": "10K_10Q",
+  "description": "10K/10Q Preparation Slides",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.Database.Activities": "[1.5.0]",
+    "UiPath.Excel.Activities": "2.16.1",
+    "UiPath.Mail.Activities": "[1.12.3]",
+    "UiPath.MicrosoftOffice365.Activities": "[1.11.1]",
+    "UiPath.System.Activities": "[21.10.3]",
+    "UiPath.UIAutomation.Activities": "[21.10.4]",
+    "UiPathTeam.XLExcel.Activities": "[1.0.6814.30102]"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "19.10.4.0",
+  "projectVersion": "1.0.190",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": false
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "modernBehavior": false
+  },
+  "arguments": {
+    "input": [
+      {
+        "name": "in_OrchestratorQueueName",
+        "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "required": false,
+        "hasDefault": false
+      }
+    ],
+    "output": []
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "964252f1-3b6d-4583-a6c5-478046a489d8",
+      "input": [
+        {
+          "name": "in_OrchestratorQueueName",
+          "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+          "required": false,
+          "hasDefault": false
+        }
+      ],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Legacy"
+}

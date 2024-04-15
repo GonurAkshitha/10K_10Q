@@ -1,0 +1,1470 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="ReadBI_AddCol" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_BI_Template" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DicParameters" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_LogNotifications" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_MappingData" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2436,5458.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ReadBI_AddCol_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="ReadBI_AddCol" sap:VirtualizedContainerService.HintSize="2446.4,5353.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BIReport" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_MappingData" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BIReport_SalesOrder" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BIReport_BillDate" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_Checks" />
+      <Variable x:TypeArguments="x:Boolean" Name="bln_RecordProcessed" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ103" sap:VirtualizedContainerService.HintSize="2404.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ103</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <Assign sap:VirtualizedContainerService.HintSize="2404.8,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sd:DataTable">[DT_MappingData]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sd:DataTable">[in_MappingData]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="2404.8,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="EXCEL" />
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="2404.8,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_5" ProcessName="EXCEL" />
+    <ui:ReadRange AddHeaders="True" DataTable="[DT_BIReport]" DisplayName="Read Range - BI Report" sap:VirtualizedContainerService.HintSize="2404.8,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" Range="A2" SheetName="Sheet1" WorkbookPath="[in_BI_Template]" />
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="2404.66666666667,22" sap2010:WorkflowViewState.IdRef="KillProcess_2" ProcessName="EXCEL" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Category" DataTable="[DT_BIReport]" DisplayName="Add Data Column - Category" sap:VirtualizedContainerService.HintSize="2404.66666666667,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" />
+    <ui:AddDataColumn x:TypeArguments="x:String" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" DefaultValue="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Notes" DataTable="[DT_BIReport]" DisplayName="Add Data Column - Notes" sap:VirtualizedContainerService.HintSize="2404.8,188" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_2" />
+    <ui:FilterDataTable DataTable="[DT_BIReport]" DisplayName="Filter Data Table - SalesORder" sap:VirtualizedContainerService.HintSize="2404.8,162.4" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[DT_BIReport_SalesOrder]" SelectColumnsMode="Keep">
+      <ui:FilterDataTable.Filters>
+        <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+          <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+        </scg:List>
+      </ui:FilterDataTable.Filters>
+      <ui:FilterDataTable.SelectColumns>
+        <scg:List x:TypeArguments="InArgument" Capacity="4">
+          <InArgument x:TypeArguments="x:String">["Sales Order Creation Date"]</InArgument>
+        </scg:List>
+      </ui:FilterDataTable.SelectColumns>
+    </ui:FilterDataTable>
+    <ui:FilterDataTable DataTable="[DT_BIReport]" DisplayName="Filter Data Table - BillDate" sap:VirtualizedContainerService.HintSize="2404.8,162.4" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[DT_BIReport_BillDate]" SelectColumnsMode="Keep">
+      <ui:FilterDataTable.Filters>
+        <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+          <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+        </scg:List>
+      </ui:FilterDataTable.Filters>
+      <ui:FilterDataTable.SelectColumns>
+        <scg:List x:TypeArguments="InArgument" Capacity="4">
+          <InArgument x:TypeArguments="x:String">["Bill Date"]</InArgument>
+        </scg:List>
+      </ui:FilterDataTable.SelectColumns>
+    </ui:FilterDataTable>
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="2404.8,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_3" ProcessName="EXCEL" />
+    <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope - Fill MappingTemplate with BI data" sap:VirtualizedContainerService.HintSize="2404.8,1208" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" Visible="False" WorkbookPath="[Path.Combine(Environment.CurrentDirectory,in_config(&quot;Local_TempFolder&quot;).ToString,in_Config(&quot;LIC_DEF_REV_Folder&quot;).ToString,in_Config(&quot;MappingTemplateFileName&quot;).tostring+&quot;.xlsx&quot;)]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,1098.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).ToString).TimeOfDay]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_BIReport_SalesOrder]" DisplayName="Write Range - SlaesOrderList" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="Sheet1" StartingCell="J7" />
+            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).ToString).TimeOfDay]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_2" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_BIReport_BillDate]" DisplayName="Write Range - BillDate" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="O7" />
+            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).ToString).TimeOfDay]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_3" />
+            <ui:ExcelWriteCell Cell="J1" DisplayName="Write Cell - Period" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="Sheet1" Text="[Split(in_DicParameters(&quot;Input Quarter&quot;).ToString,&quot;/&quot;)(0).Replace(&quot;00&quot;,&quot;&quot;)]" />
+            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).ToString).TimeOfDay]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
+            <ui:ExcelWriteCell Cell="J2" DisplayName="Write Cell - FQ" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="Sheet1" Text="[in_DicParameters(&quot;Year&quot;).ToString]" />
+            <Delay Duration="00:00:05" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_9" />
+            <ui:ExcelWriteCell Cell="K1" DisplayName="Write Cell - FY" sap:VirtualizedContainerService.HintSize="334.4,88" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="Sheet1" Text="[Split(in_DicParameters(&quot;Input Quarter&quot;).ToString,&quot;/&quot;)(1)]" />
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[DT_Checks]" DisplayName="Read Range - SO and BD" sap:VirtualizedContainerService.HintSize="334.4,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="J6" SheetName="Sheet1" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ExcelApplicationScope>
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="2404.8,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_4" ProcessName="EXCEL" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ104" sap:VirtualizedContainerService.HintSize="2404.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ104</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[DT_BIReport]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="2404.8,1208" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="BIrow" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="580,1087.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="str_SalesOrder">
+                <Variable.Default>
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </Variable.Default>
+              </Variable>
+              <Variable x:TypeArguments="x:String" Default="default" Name="str_ifCurrentPeriod" />
+              <Variable x:TypeArguments="x:String" Name="str_BillDate" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign DisplayName="SalesOrder" sap:VirtualizedContainerService.HintSize="538.4,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_SalesOrder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[BIrow.Item("Sales Order Creation Date").tostring.Trim]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="BillDate" sap:VirtualizedContainerService.HintSize="538.4,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_BillDate]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[BIrow.Item("Bill Date").ToString.Trim]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Sequence DisplayName="Categorize" sap:VirtualizedContainerService.HintSize="538.4,661.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Switch x:TypeArguments="x:String" DisplayName="Switch - GL Checks" Expression="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim]" sap:VirtualizedContainerService.HintSize="496.8,187.2" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If x:Key="400000" Condition="[in_Config(&quot;LIC_DEF_REV_Filter2_DocType&quot;).tostring.Contains(BIrow.Item(&quot;Accounting Document type&quot;).ToString)]" DisplayName="400000 - Check doctype - 2" sap:VirtualizedContainerService.HintSize="790.4,335.2" sap2010:WorkflowViewState.IdRef="If_25">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Assign DisplayName="Set Category 2.1" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_33">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </If.Then>
+                  <If.Else>
+                    <If Condition="[in_Config(&quot;LIC_DEF_REV_JournalEntryDocType&quot;).tostring.Contains(BIrow.Item(&quot;Accounting Document type&quot;).ToString)]" DisplayName="check doctype - 3" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_24">
+                      <If.Then>
+                        <Assign DisplayName="Set Category 2.2" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_34">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </If.Then>
+                    </If>
+                  </If.Else>
+                </If>
+                <If x:Key="400015" Condition="[BIrow.Item(&quot;Product Category Code (PCC)&quot;).ToString.Trim=&quot;VSM&quot; or BIrow.Item(&quot;Product Category Code (PCC)&quot;).ToString.Trim=&quot;Z_VSM&quot;]" DisplayName="If - 6a" sap:VirtualizedContainerService.HintSize="2228,1364" sap2010:WorkflowViewState.IdRef="If_38">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence DisplayName="6a" sap:VirtualizedContainerService.HintSize="304,155.2" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign DisplayName="Set Category 6a" sap:VirtualizedContainerService.HintSize="262.4,62.4" sap2010:WorkflowViewState.IdRef="Assign_35">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <If Condition="[BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCVR&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR3&quot;]" DisplayName="if - 6b,6c" sap:VirtualizedContainerService.HintSize="1877.6,1209.6" sap2010:WorkflowViewState.IdRef="If_37">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <If Condition="[str_BillDate.Trim=&quot;#&quot; or str_BillDate=&quot;&quot;]" DisplayName="Check billing date 6b,c" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_28">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <Assign DisplayName="Set Notes 6b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_36">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Object">["Invalid Bill Date"]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence DisplayName="Check BillDate in Quarter" sap:VirtualizedContainerService.HintSize="834,588.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow - 6 - billdate" sap:VirtualizedContainerService.HintSize="792,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                  <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">
+                                    <Literal x:TypeArguments="x:String" Value="" />
+                                  </InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[str_BillDate]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                              <If Condition="[str_ifCurrentPeriod.ToLower=&quot;true&quot;]" DisplayName="Check if bill date is in current quarter - 6b" sap:VirtualizedContainerService.HintSize="792,370" sap2010:WorkflowViewState.IdRef="If_27">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Assign DisplayName="Set Category 6b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_37">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Then>
+                                <If.Else>
+                                  <If Condition="[str_ifCurrentPeriod.ToLower=&quot;false&quot;]" DisplayName="Check if bill date is in current quarter - 6b" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_26">
+                                    <If.Then>
+                                      <Assign DisplayName="Set Category 6b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_38">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </If.Then>
+                                  </If>
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </If.Then>
+                      <If.Else>
+                        <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLS&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR1&quot;) AND (BIrow.Item(&quot;Item Category&quot;).ToString.Trim=&quot;ZLIC&quot; or BIrow.Item(&quot;Item Category&quot;).ToString.Trim=&quot;ZG2N&quot;)]" DisplayName="if - 6d,6e" sap:VirtualizedContainerService.HintSize="1634,1050.66666666667" sap2010:WorkflowViewState.IdRef="If_36">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <If Condition="[str_SalesORder.Trim=&quot;#&quot; or str_SalesORder=&quot;&quot;]" DisplayName="Check SalesOrder 6d,e" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_31">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If.Then>
+                                <Assign DisplayName="Set Notes 6b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_39">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Object">["Invalid Sales Order creation date"]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </If.Then>
+                              <If.Else>
+                                <Sequence DisplayName="Check SalesOrder date in Quarter" sap:VirtualizedContainerService.HintSize="834,588.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow - 6d,e - salesorder" sap:VirtualizedContainerService.HintSize="792,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                      <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">[str_SalesOrder]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">
+                                        <Literal x:TypeArguments="x:String" Value="" />
+                                      </InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                  </ui:InvokeWorkflowFile>
+                                  <If Condition="[str_ifCurrentPeriod.ToLower=&quot;true&quot;]" DisplayName="Check if Sales Order date is in current quarter - 6d" sap:VirtualizedContainerService.HintSize="792,370" sap2010:WorkflowViewState.IdRef="If_30">
+                                    <If.Then>
+                                      <Assign DisplayName="Set Category 6d" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_40">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </If.Then>
+                                    <If.Else>
+                                      <If Condition="[str_ifCurrentPeriod.ToLower=&quot;false&quot;]" DisplayName="Check if Sales Order date is in current quarter - 6e" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_29">
+                                        <If.Then>
+                                          <Assign DisplayName="Set Category 6e" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_41">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                        </If.Then>
+                                      </If>
+                                    </If.Else>
+                                  </If>
+                                </Sequence>
+                              </If.Else>
+                            </If>
+                          </If.Then>
+                          <If.Else>
+                            <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLS&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR1&quot;) AND (BIrow.Item(&quot;Item Category&quot;).ToString.Trim=&quot;ZOPT&quot; OR BIrow.Item(&quot;Item Category&quot;).ToString.Trim=&quot;ZRSR&quot;)]" DisplayName="if - 6f,6g" sap:VirtualizedContainerService.HintSize="1388,896.666666666667" sap2010:WorkflowViewState.IdRef="If_69">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If.Then>
+                                <If Condition="[str_BillDate.Trim=&quot;#&quot; or str_BillDate=&quot;&quot;]" DisplayName="Check billdate 6f,g" sap:VirtualizedContainerService.HintSize="1142,742.666666666667" sap2010:WorkflowViewState.IdRef="If_64">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <Assign DisplayName="Set Notes 6f,g" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_74">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Object">["Invalid Bill Date"]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </If.Then>
+                                  <If.Else>
+                                    <Sequence DisplayName="Check bill date in Quarter" sap:VirtualizedContainerService.HintSize="834,588.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow - 6f,g - Bill Date" sap:VirtualizedContainerService.HintSize="792,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                        <ui:InvokeWorkflowFile.Arguments>
+                                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                          <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">
+                                            <Literal x:TypeArguments="x:String" Value="" />
+                                          </InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                          <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[str_BillDate]</InArgument>
+                                        </ui:InvokeWorkflowFile.Arguments>
+                                      </ui:InvokeWorkflowFile>
+                                      <If Condition="[str_ifCurrentPeriod.ToLower=&quot;true&quot;]" DisplayName="Check if bill date is in current quarter - 6f" sap:VirtualizedContainerService.HintSize="792,370" sap2010:WorkflowViewState.IdRef="If_63">
+                                        <If.Then>
+                                          <Assign DisplayName="Set Category 6f" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_75">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                        </If.Then>
+                                        <If.Else>
+                                          <If Condition="[str_ifCurrentPeriod.tolower=&quot;false&quot;]" DisplayName="Check if bill date is in current quarter - 6g" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_62">
+                                            <If.Then>
+                                              <Assign DisplayName="Set Category 6g" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_76">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                            </If.Then>
+                                          </If>
+                                        </If.Else>
+                                      </If>
+                                    </Sequence>
+                                  </If.Else>
+                                </If>
+                              </If.Then>
+                              <If.Else>
+                                <If Condition="[BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRES&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLV&quot;]" DisplayName="if - 6h,6i" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_68">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <If Condition="[str_BillDate.Trim=&quot;#&quot; or str_BillDate=&quot;&quot;]" DisplayName="Check billing date 6h,i" sap:VirtualizedContainerService.HintSize="1142,742.666666666667" sap2010:WorkflowViewState.IdRef="If_67">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Assign DisplayName="Set Notes 6h,i" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_77">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Object">["Invalid Bill Date"]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence DisplayName="Check BillDate in Quarter h,i" sap:VirtualizedContainerService.HintSize="834,588.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_44">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow - 6 h,i- billdate" sap:VirtualizedContainerService.HintSize="792,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                              <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">
+                                                <Literal x:TypeArguments="x:String" Value="" />
+                                              </InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[str_BillDate]</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <If Condition="[str_ifCurrentPeriod.ToLower=&quot;true&quot;]" DisplayName="Check if bill date is in current quarter - 6h,i" sap:VirtualizedContainerService.HintSize="792,370" sap2010:WorkflowViewState.IdRef="If_66">
+                                            <If.Then>
+                                              <Assign DisplayName="Set Category 6h" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_78">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                            </If.Then>
+                                            <If.Else>
+                                              <If Condition="[str_ifCurrentPeriod.ToLower=&quot;false&quot;]" DisplayName="Check if bill date is not in current quarter - 6i" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_65">
+                                                <If.Then>
+                                                  <Assign DisplayName="Set Category 6g" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_79">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                    </Assign.Value>
+                                                  </Assign>
+                                                </If.Then>
+                                              </If>
+                                            </If.Else>
+                                          </If>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </If.Then>
+                                </If>
+                              </If.Else>
+                            </If>
+                          </If.Else>
+                        </If>
+                      </If.Else>
+                    </If>
+                  </If.Else>
+                </If>
+                <If x:Key="400040" Condition="[str_SalesOrder.Trim=&quot;#&quot; or str_SalesOrder.Trim=&quot;&quot;]" DisplayName="Check SalesOrderCreationDate - 7" sap:VirtualizedContainerService.HintSize="1140,708" sap2010:WorkflowViewState.IdRef="If_41">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Assign DisplayName="Set Notes 7" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_45">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">["Invalid Sales Order creation date"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence DisplayName="Check SalesOrder date in Quarter" sap:VirtualizedContainerService.HintSize="834,588.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow - 7a,b - salesorder" sap:VirtualizedContainerService.HintSize="792,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                          <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">[str_SalesOrder]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">
+                            <Literal x:TypeArguments="x:String" Value="" />
+                          </InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                      </ui:InvokeWorkflowFile>
+                      <If Condition="[str_ifCurrentPeriod.ToLower=&quot;true&quot;]" DisplayName="Check if Sales Order date is in current quarter - 7a" sap:VirtualizedContainerService.HintSize="792,370" sap2010:WorkflowViewState.IdRef="If_40">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If.Then>
+                          <Assign DisplayName="Set Category 7a" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_46">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                        </If.Then>
+                        <If.Else>
+                          <If Condition="[str_ifCurrentPeriod.ToLower=&quot;false&quot;]" DisplayName="Check if Sales Order date is in current quarter - 7b" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_39">
+                            <If.Then>
+                              <Assign DisplayName="Set Category 7b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_47">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                            </If.Then>
+                          </If>
+                        </If.Else>
+                      </If>
+                    </Sequence>
+                  </If.Else>
+                </If>
+              </Switch>
+              <If Condition="[in_Config(&quot;LIC_DEF_REV_Filter4_GL&quot;).ToString.Contains(BIrow.Item(&quot;G/L Account&quot;).ToString.Trim)]" DisplayName="Check if GL - 4" sap:VirtualizedContainerService.HintSize="496.8,248.8" sap2010:WorkflowViewState.IdRef="If_42">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Assign DisplayName="Set Category 4" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_48">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </If.Then>
+              </If>
+              <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="496.8,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                <ui:CommentOut.Body>
+                  <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="1557.6,238.4" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[in_Config(&quot;LIC_DEF_REV_Filter4_GL&quot;).ToString.Contains(BIrow.Item(&quot;G/L Account&quot;).ToString.Trim)]" DisplayName="Filter 4" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="If_61">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Assign DisplayName="Set Category 3" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_49">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence sap:VirtualizedContainerService.HintSize="1210,3837.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_41">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If Condition="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim=&quot;400015&quot;]" DisplayName="Filter 6" sap:VirtualizedContainerService.HintSize="1168,3550.66666666667" sap2010:WorkflowViewState.IdRef="If_56">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="6a-g" sap:VirtualizedContainerService.HintSize="1022,3396.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If Condition="[BIrow.Item(&quot;Product Category Code (PCC)&quot;).ToString.Trim=&quot;VOICE SOFTWARE MAINTENANCE&quot;]" DisplayName="6a" sap:VirtualizedContainerService.HintSize="980,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_43">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Assign DisplayName="Set Category 6a" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_50">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                      <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_51">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </If.Then>
+                                </If>
+                                <Assign DisplayName="ini if current period" sap:VirtualizedContainerService.HintSize="980,62" sap2010:WorkflowViewState.IdRef="Assign_52">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[str_ifCurrentPeriod]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <If Condition="[bln_RecordProcessed=True]" DisplayName="Check if BillDate is # - 6b" sap:VirtualizedContainerService.HintSize="980,1386.66666666667" sap2010:WorkflowViewState.IdRef="If_47">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Else>
+                                    <If Condition="[(str_BillDate.Trim=&quot;#&quot; or str_BillDate.Trim=&quot;&quot;)]" DisplayName="check processed record" sap:VirtualizedContainerService.HintSize="834,1232.66666666667" sap2010:WorkflowViewState.IdRef="If_46">
+                                      <If.Then>
+                                        <Assign DisplayName="Set Notes 6b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_53">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Object">["Invalid Bill Date"]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence sap:VirtualizedContainerService.HintSize="526,1078.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow" sap:VirtualizedContainerService.HintSize="484,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                              <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">
+                                                <Literal x:TypeArguments="x:String" Value="" />
+                                              </InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[str_BillDate]</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCVR&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR3&quot;) AND str_ifCurrentPeriod=&quot;True&quot;]" DisplayName="6b" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_44">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 5a" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_54">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_55">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCVR&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR3&quot;) AND str_ifCurrentPeriod&lt;&gt;&quot;True&quot;]" DisplayName="6c" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_45">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 6c" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_56">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_57">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </If.Else>
+                                </If>
+                                <Assign DisplayName="ini if current period" sap:VirtualizedContainerService.HintSize="980,62" sap2010:WorkflowViewState.IdRef="Assign_58">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[str_ifCurrentPeriod]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <If Condition="[bln_RecordProcessed=True]" DisplayName="Check if SO is #" sap:VirtualizedContainerService.HintSize="980,1386.66666666667" sap2010:WorkflowViewState.IdRef="If_51">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Else>
+                                    <If Condition="[(str_SalesOrder.Trim=&quot;#&quot; or str_SalesOrder.Trim=&quot;&quot;)]" DisplayName="check processed record" sap:VirtualizedContainerService.HintSize="834,1232.66666666667" sap2010:WorkflowViewState.IdRef="If_50">
+                                      <If.Then>
+                                        <Assign DisplayName="Set Notes 6d" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_59">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Object">["Invalid Sales Order Creation Date"]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence sap:VirtualizedContainerService.HintSize="526,1078.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow" sap:VirtualizedContainerService.HintSize="484,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                              <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">[str_SalesOrder]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">
+                                                <Literal x:TypeArguments="x:String" Value="" />
+                                              </InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLS&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR1&quot;) AND str_ifCurrentPeriod=&quot;True&quot;]" DisplayName="6d" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_48">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 6d" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_60">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_61">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLS&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZCR1&quot;) AND str_ifCurrentPeriod&lt;&gt;&quot;True&quot;]" DisplayName="6e" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_49">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 6e" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_62">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_63">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </If.Else>
+                                </If>
+                                <Assign DisplayName="ini if current period" sap:VirtualizedContainerService.HintSize="980,62" sap2010:WorkflowViewState.IdRef="Assign_64">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[str_ifCurrentPeriod]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <If Condition="[bln_RecordProcessed=True]" DisplayName="Check if DB is #" sap:VirtualizedContainerService.HintSize="980,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_55">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Else>
+                                    <If Condition="[(str_BillDate.Trim=&quot;#&quot; or str_BillDate.Trim=&quot;&quot;)]" DisplayName="check processed record" sap:VirtualizedContainerService.HintSize="508,223.333333333333" sap2010:WorkflowViewState.IdRef="If_54">
+                                      <If.Then>
+                                        <Assign DisplayName="Set Notes 6f" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_65">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Object">["Invalid Bill Date"]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                      <If.Else>
+                                        <Sequence sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow" sap:VirtualizedContainerService.HintSize="484,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                              <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">
+                                                <Literal x:TypeArguments="x:String" Value="" />
+                                              </InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[DT_Checks]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">[str_BillDate]</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                          </ui:InvokeWorkflowFile>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRES&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLV&quot;) AND str_ifCurrentPeriod=&quot;True&quot;]" DisplayName="6f" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_52">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 6f" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_66">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_67">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                          <If Condition="[(BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRES&quot; or BIrow.Item(&quot;Sales Doc Type&quot;).ToString.Trim=&quot;ZRLV&quot;) AND str_ifCurrentPeriod&lt;&gt;&quot;True&quot;]" DisplayName="6g" sap:VirtualizedContainerService.HintSize="484,410" sap2010:WorkflowViewState.IdRef="If_53">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <If.Then>
+                                              <Sequence sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="Set Category 6g" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_68">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="Set Record Processed" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_69">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Boolean">[bln_RecordProcessed]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </If.Then>
+                                          </If>
+                                        </Sequence>
+                                      </If.Else>
+                                    </If>
+                                  </If.Else>
+                                </If>
+                              </Sequence>
+                            </If.Then>
+                          </If>
+                          <Assign DisplayName="ini if current period" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_70">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[str_ifCurrentPeriod]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <If Condition="[bln_RecordProcessed=True]" DisplayName="SalesORder is #?" sap:VirtualizedContainerService.HintSize="262,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_60">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Else>
+                              <If Condition="[(str_SalesOrder.Trim=&quot;#&quot; or str_SalesOrder.Trim=&quot;&quot;)]" DisplayName="check processed record" sap:VirtualizedContainerService.HintSize="1108,834.666666666667" sap2010:WorkflowViewState.IdRef="If_59">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Assign DisplayName="7a" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_71">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Notes")]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Object">["Invalid SalesOrder creation date"]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Then>
+                                <If.Else>
+                                  <Sequence sap:VirtualizedContainerService.HintSize="800,680.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_40">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Check_Current_Period workflow" sap:VirtualizedContainerService.HintSize="758,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="LIC_DEF_REV\Check_Current_Period.xaml">
+                                      <ui:InvokeWorkflowFile.Arguments>
+                                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_LogNotifications]</InArgument>
+                                        <OutArgument x:TypeArguments="x:String" x:Key="out_ifCurrentPeriod">[str_ifCurrentPeriod]</OutArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_SalesOrder">[str_SalesOrder]</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_CurrentDate">[now.ToString("MM/dd/yyyy")]</InArgument>
+                                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_MappingData">[dt_checks]</InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_BillDate">
+                                          <Literal x:TypeArguments="x:String" Value="" />
+                                        </InArgument>
+                                      </ui:InvokeWorkflowFile.Arguments>
+                                    </ui:InvokeWorkflowFile>
+                                    <If Condition="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim=&quot;400040&quot;]" DisplayName="Filter 7" sap:VirtualizedContainerService.HintSize="758,462" sap2010:WorkflowViewState.IdRef="If_58">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Sequence DisplayName="7a and 7b" sap:VirtualizedContainerService.HintSize="612,308" sap2010:WorkflowViewState.IdRef="Sequence_39">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <If Condition="[str_ifCurrentPeriod=&quot;True&quot;]" DisplayName="7a current quarter" sap:VirtualizedContainerService.HintSize="570,216" sap2010:WorkflowViewState.IdRef="If_57">
+                                            <If.Then>
+                                              <Assign DisplayName="Set Category 7a" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_72">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                            </If.Then>
+                                            <If.Else>
+                                              <Assign DisplayName="Set Category 7b" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_73">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:Object">["Rollout from deferred revenue"]</InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                            </If.Else>
+                                          </If>
+                                        </Sequence>
+                                      </If.Then>
+                                    </If>
+                                  </Sequence>
+                                </If.Else>
+                              </If>
+                            </If.Else>
+                          </If>
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                    <If Condition="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim=&quot;400000&quot; AND  in_Config(&quot;LIC_DEF_REV_Filter2_DocType&quot;).tostring.Contains(BIrow.Item(&quot;Accounting Document type&quot;).ToString)]" DisplayName="Filter 2" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="If_1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Assign DisplayName="Set Category 1" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </If.Then>
+                      <If.Else>
+                        <If Condition="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim=&quot;400000&quot; AND  in_Config(&quot;LIC_DEF_REV_JournalEntryDocType&quot;).tostring.Contains(BIrow.Item(&quot;Accounting Document type&quot;).ToString)]" DisplayName="Filter 3" sap:VirtualizedContainerService.HintSize="484,216" sap2010:WorkflowViewState.IdRef="If_15">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <Assign DisplayName="Set Category 3" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_20">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Object">[BIrow.Item("Category")]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Object">["Not rollout from deferred revenue"]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </If.Then>
+                        </If>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </ui:CommentOut.Body>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:CommentOut>
+            </Sequence>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="538.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[BIrow.Item(&quot;G/L Account&quot;).ToString.Trim+&quot; &quot;+BIrow.Item(&quot;Accounting Document No&quot;).ToString.Trim+&quot; &quot;+BIrow.Item(&quot;Item Category&quot;).ToString+&quot; &quot;+BIrow.Item(&quot;Sales Doc type&quot;).ToString+&quot; &quot;+str_ifCurrentPeriod]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ForEachRow>
+    <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="2404.8,22.4" sap2010:WorkflowViewState.IdRef="Delay_5" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ105" sap:VirtualizedContainerService.HintSize="2404.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ105</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="2404.8,558.4" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3" RetryInterval="00:00:05">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="375.2,382.4" sap2010:WorkflowViewState.IdRef="Sequence_45">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - EXCEL" sap:VirtualizedContainerService.HintSize="333.6,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_6" ProcessName="EXCEL" />
+            <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="333.6,22.4" sap2010:WorkflowViewState.IdRef="Delay_10" />
+            <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope -BI to OP " sap:VirtualizedContainerService.HintSize="333.6,52.8" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" WorkbookPath="[Path.Combine(Environment.CurrentDirectory,in_config(&quot;Local_OPFolder&quot;).ToString,in_Config(&quot;LIC_DEF_REV_Folder&quot;).ToString,in_Config(&quot;LIC_DEF_REV_OP_FileName&quot;).ToString+&quot;.xlsx&quot;)]">
+              <ui:ExcelApplicationScope.Body>
+                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="550.4,1655.2" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_BIReport]" DisplayName="Write Range BI to OP" sap:VirtualizedContainerService.HintSize="508.8,88" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="Data" StartingCell="A5" />
+                    <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="508.8,22.4" sap2010:WorkflowViewState.IdRef="Delay_6" />
+                    <ui:ExcelSelectRange DisplayName="Select Range - Pivot sheet" sap:VirtualizedContainerService.HintSize="508.8,60" sap2010:WorkflowViewState.IdRef="ExcelSelectRange_1" Range="A4" SheetName="Pivot" />
+                    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'OP-  Licensing'" sap:VirtualizedContainerService.HintSize="508.8,1272" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="c5bb390e136077a3580084167f9c52e9" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='*Licensing Deferred Revenue*' /&gt;">
+                      <ui:WindowScope.Body>
+                        <ActivityAction x:TypeArguments="x:Object">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                          </ActivityAction.Argument>
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="475.2,1124.8" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="433.6,22.4" sap2010:WorkflowViewState.IdRef="MaximizeWindow_1" />
+                            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DelayBetweenKeys="1000" DisplayName="Send Hotkey - Open change data source" sap:VirtualizedContainerService.HintSize="433.6,116" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="jtid" KeyModifiers="Alt">
+                              <ui:SendHotkey.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="13afa6b1-c90f-4af8-8985-81823bb27128" WaitForReady="COMPLETE">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                </ui:Target>
+                              </ui:SendHotkey.Target>
+                            </ui:SendHotkey>
+                            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Change data source'" sap:VirtualizedContainerService.HintSize="433.6,375.2" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="8a23c0482b9aea29932802f26a7c1340" Selector="&lt;wnd app='excel.exe' cls='bosa_sdm_XL9' title='Change PivotTable Data Source' /&gt;">
+                              <ui:WindowScope.Body>
+                                <ActivityAction x:TypeArguments="x:Object">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                  </ActivityAction.Argument>
+                                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,228" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" ClickBeforeTyping="False" DisplayName="Type Into 'EDTBX'" EmptyField="False" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_3" Text="[&quot;Data!$A$4:$V$&quot;+(DT_BIReport.Rows.Count+4).ToString+ &quot;[k(enter)]&quot;]">
+                                      <ui:TypeInto.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="655939cf-0003-46b2-8e35-7fffdb5b01b8" InformativeScreenshot="b99cdb6452b03e71023950538a9bc181" Selector="&lt;wnd aaname='*' cls='EDTBX' /&gt;" WaitForReady="COMPLETE">
+                                          <ui:Target.TimeoutMS>
+                                            <InArgument x:TypeArguments="x:Int32" />
+                                          </ui:Target.TimeoutMS>
+                                        </ui:Target>
+                                      </ui:TypeInto.Target>
+                                    </ui:TypeInto>
+                                  </Sequence>
+                                </ActivityAction>
+                              </ui:WindowScope.Body>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:WindowScope>
+                            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DelayBetweenKeys="1000" DisplayName="Send Hotkey - Refresh" sap:VirtualizedContainerService.HintSize="433.6,116" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="jtfr" KeyModifiers="Alt">
+                              <ui:SendHotkey.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="27327844-5e0e-4147-84db-f24a8b21e44c">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:SendHotkey.Target>
+                            </ui:SendHotkey>
+                            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Delay_7" />
+                            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey" sap:VirtualizedContainerService.HintSize="434,117.333333333333" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="s" KeyModifiers="Ctrl">
+                              <ui:SendHotkey.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="c668df2d-5cd8-404a-a735-9950b8411381">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:SendHotkey.Target>
+                            </ui:SendHotkey>
+                            <Delay DisplayName="MediumDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MediumDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="Delay_8" />
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:WindowScope.Body>
+                    </ui:WindowScope>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ExcelApplicationScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ExcelApplicationScope>
+          </Sequence>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean" />
+      </ui:RetryScope.Condition>
+    </ui:RetryScope>
+  </Sequence>
+</Activity>

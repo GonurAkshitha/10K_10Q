@@ -1,0 +1,806 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="GetGLBalances" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DicParameters" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_LogNotifications" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="out_ProductsGL" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_ServicesGL" Type="OutArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1252.8,8335.2</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>GetGLBalances_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="28">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="29">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="GetGLBalances" sap:VirtualizedContainerService.HintSize="1263.2,8270.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str_Prod_GL_ScreenshotPath" />
+      <Variable x:TypeArguments="x:String" Name="str_GL_CC_Screenshotpath" />
+      <Variable x:TypeArguments="x:String" Name="str_GL_Acc_Screenshotpath" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ80" sap:VirtualizedContainerService.HintSize="1221.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ80</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+        <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+        <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+        <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+        <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each - GL variants" sap:VirtualizedContainerService.HintSize="1221.6,8024" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Split(in_Config(&quot;PS_RG_GL_Variant&quot;).tostring,&quot;|&quot;)]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="GL_variant" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1186.4,7899.2" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1144.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Run FAGLB03&quot;]" />
+            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'saplogon.exe SAP'" sap:VirtualizedContainerService.HintSize="1144.8,375.2" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="eb61e51ff5989237742eb9394a771f02" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='*SAP*' /&gt;">
+              <ui:WindowScope.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,228" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into 'Faglb03'" EmptyField="False" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[in_config(&quot;SAPSearch_faglb03&quot;).tostring+ &quot;[k(enter)]&quot;]">
+                      <ui:TypeInto.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ac704547-6cbd-422a-90e1-cacb10842714" InformativeScreenshot="e557301cdd3c8f69256dcb7e3e1bec49" Selector="&lt;sap id='tbar[0]/okcd' /&gt;" TimeoutMS="60000" WaitForReady="COMPLETE" />
+                      </ui:TypeInto.Target>
+                    </ui:TypeInto>
+                  </Sequence>
+                </ActivityAction>
+              </ui:WindowScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:WindowScope>
+            <ui:OnUiElementAppear ContinueOnError="{x:Null}" FoundElement="{x:Null}" WaitActive="{x:Null}" WaitVisible="{x:Null}" DisplayName="On Element Appear 'Titlebar G/L'" sap:VirtualizedContainerService.HintSize="1144.8,7258.4" sap2010:WorkflowViewState.IdRef="OnUiElementAppear_1" RepeatForever="False">
+              <ui:OnUiElementAppear.Body>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1111.2,7081.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window ' G/L'" sap:VirtualizedContainerService.HintSize="1069.6,4582.4" sap2010:WorkflowViewState.IdRef="WindowScope_3" InformativeScreenshot="a685ec601a9b704958d23a6c8efc71cf" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='G/L Account Balance Display' /&gt;">
+                    <ui:WindowScope.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="752.8,4435.2" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Send Hotkey - f5 variant" sap:VirtualizedContainerService.HintSize="711.2,116" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="f5" KeyModifiers="Shift" SpecialKey="True">
+                            <ui:SendHotkey.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="b4079cde-bb0e-492d-a27d-2c1393d72885" WaitForReady="COMPLETE">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                              </ui:Target>
+                            </ui:SendHotkey.Target>
+                          </ui:SendHotkey>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ81" sap:VirtualizedContainerService.HintSize="711.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ81</InArgument>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues">[GL_variant.ToString]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+                              <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+                              <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+                              <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+                              <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="711.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Select Variant: &quot;+GL_variant.ToString]" />
+                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window - Variant window" sap:VirtualizedContainerService.HintSize="711.2,52.8" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="14a8fdc846cb4d0f6aca454cb063133c" Selector="&lt;wnd app='saplogon.exe' cls='#32770' title='Find Variant' /&gt;">
+                            <ui:WindowScope.Body>
+                              <ActivityAction x:TypeArguments="x:Object">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,550.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DelayBetweenKeys="700" DelayMS="3000" DisplayName="Type Into 'TextField  Variant Name'" EmptyField="True" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_2" Text="[&quot;/&quot;+GL_variant.ToString]">
+                                    <ui:TypeInto.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="85011f45-20fc-48f1-aa76-22676c9d0245" InformativeScreenshot="e02b86e64916c958cb02cd38816a3459" Selector="&lt;sap id='usr/txtV-LOW' /&gt;" WaitForReady="COMPLETE">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                      </ui:Target>
+                                    </ui:TypeInto.Target>
+                                  </ui:TypeInto>
+                                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into 'TextField  User Name'" EmptyField="True" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_3">
+                                    <ui:TypeInto.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0e941414-f0db-4304-8f6f-bce6dc3d0c9c" InformativeScreenshot="0a217392ca693678d01cf3df7183fb00" Selector="&lt;sap id='usr/txtENAME-LOW' /&gt;" WaitForReady="COMPLETE">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                      </ui:Target>
+                                    </ui:TypeInto.Target>
+                                    <ui:TypeInto.Text>
+                                      <InArgument x:TypeArguments="x:String">
+                                        <Literal x:TypeArguments="x:String" Value="" />
+                                      </InArgument>
+                                    </ui:TypeInto.Text>
+                                  </ui:TypeInto>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Variant Button  Execute (F8)'" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="62a0cff0-8bae-4e35-ae81-33b8d2782988" InformativeScreenshot="7811fc995d983d8ca3b329d0d6a6e843" Selector="&lt;sap id='tbar[0]/btn[8]' /&gt;" WaitForReady="COMPLETE">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                      </ui:Target>
+                                    </ui:Click.Target>
+                                  </ui:Click>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:WindowScope.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:WindowScope>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="711.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Enter Fiscal year&quot;]" />
+                          <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into 'TextField  Fiscal Year'" EmptyField="True" sap:VirtualizedContainerService.HintSize="711.2,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_4" Text="[in_DicParameters(&quot;Year&quot;).tostring]">
+                            <ui:TypeInto.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="fd3625b3-b685-4c1b-b339-620efa23c7ab" InformativeScreenshot="9a4b90edd61fbcad42791d2c49f40b76" Selector="&lt;sap id='usr/txtRYEAR' /&gt;" WaitForReady="COMPLETE">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                              </ui:Target>
+                            </ui:TypeInto.Target>
+                          </ui:TypeInto>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Button MultipleGL Acct'" sap:VirtualizedContainerService.HintSize="711.2,107.2" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="cee8fe05-6467-427b-af45-e2fbbd08d58a" InformativeScreenshot="1f93ae40f27bd9adc4f514922774a5b8" Selector="&lt;sap id='usr/btn%_RACCT_%_APP_%-VALU_PUSH' /&gt;" WaitForReady="COMPLETE">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                              </ui:Target>
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <If Condition="[GL_variant.ToString.Contains(&quot;SERV_REV_GEO&quot;)]" DisplayName="If Varinat is Services" sap:VirtualizedContainerService.HintSize="711.2,1021.6" sap2010:WorkflowViewState.IdRef="If_5">
+                            <If.Then>
+                              <Sequence DisplayName="Services variant Sequence" sap:VirtualizedContainerService.HintSize="550.4,832.8" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window Multiple account" sap:VirtualizedContainerService.HintSize="508.8,740" sap2010:WorkflowViewState.IdRef="WindowScope_8" InformativeScreenshot="19b0a176fb0ebc55c61b36a833b579de" Selector="&lt;wnd app='saplogon.exe' cls='#32770' title='Multiple Selection for Account Number' idx='*' /&gt;">
+                                  <ui:WindowScope.Body>
+                                    <ActivityAction x:TypeArguments="x:Object">
+                                      <ActivityAction.Argument>
+                                        <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                      </ActivityAction.Argument>
+                                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="475.2,592.8" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                                        <Sequence.Variables>
+                                          <Variable x:TypeArguments="x:Int32" Name="GLAccountIndex" />
+                                        </Sequence.Variables>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:Click SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DelayBefore="1000" DelayMS="2000" DisplayName="Click 'Button Delete'- previous entry" sap:VirtualizedContainerService.HintSize="433.6,107.2" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                          <ui:Click.CursorPosition>
+                                            <ui:CursorPosition Position="Center">
+                                              <ui:CursorPosition.OffsetX>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetX>
+                                              <ui:CursorPosition.OffsetY>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:CursorPosition.OffsetY>
+                                            </ui:CursorPosition>
+                                          </ui:Click.CursorPosition>
+                                          <ui:Click.Target>
+                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="544019f3-5649-46f7-b64e-5d040a260720" InformativeScreenshot="fb356867173a9b2f65e13b55c0160c96" Selector="&lt;sap id='tbar[0]/btn[16]' /&gt;" WaitForReady="COMPLETE">
+                                              <ui:Target.TimeoutMS>
+                                                <InArgument x:TypeArguments="x:Int32" />
+                                              </ui:Target.TimeoutMS>
+                                            </ui:Target>
+                                          </ui:Click.Target>
+                                        </ui:Click>
+                                        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[GLAccountIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="433.6,352.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Split(in_Config(&quot;PS_RG_Services_GLAccount&quot;).tostring,&quot;|&quot;)]">
+                                          <ui:ForEach.Body>
+                                            <ActivityAction x:TypeArguments="x:String">
+                                              <ActivityAction.Argument>
+                                                <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+                                              </ActivityAction.Argument>
+                                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="375.2,228" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'CTextField  Single value'" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_6" Text="[item.ToString.Trim]">
+                                                  <ui:TypeInto.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0dc26f92-caf6-4f63-8c4b-f8634c48ce44" InformativeScreenshot="edb1e12b2362762587ce3345361aecc8" Selector="[&quot;&lt;sap colTooltip='Single Value' id='usr/tabsTAB_STRIP/tabpSIVA/ssubSCREEN_HEADER:SAPLALDB:*/tblSAPLALDBSINGLE' tableRow='&quot;+GLAccountIndex.ToString+&quot;' /&gt;&quot;]" WaitForReady="COMPLETE">
+                                                      <ui:Target.TimeoutMS>
+                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                      </ui:Target.TimeoutMS>
+                                                    </ui:Target>
+                                                  </ui:TypeInto.Target>
+                                                </ui:TypeInto>
+                                              </Sequence>
+                                            </ActivityAction>
+                                          </ui:ForEach.Body>
+                                        </ui:ForEach>
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:WindowScope.Body>
+                                </ui:WindowScope>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_15">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <Assign DisplayName="set GLAcct path to default" sap:VirtualizedContainerService.HintSize="711.2,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[str_GL_Acc_Screenshotpath]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke TakeScreenshot workflow - GL Acct" sap:VirtualizedContainerService.HintSize="711.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\TakeScreenshot.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_config("PS_RG_Parameters_ScreenshotPath").tostring.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring)]</InArgument>
+                              <InOutArgument x:TypeArguments="x:String" x:Key="io_FilePath">[str_GL_Acc_Screenshotpath]</InOutArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                          <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - excel" sap:VirtualizedContainerService.HintSize="711.2,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_3" ProcessName="EXCEL" />
+                          <If Condition="[GL_variant.tostring.ToLower.Contains(&quot;prod&quot;)]" DisplayName="Check variant name" sap:VirtualizedContainerService.HintSize="711.2,52.8" sap2010:WorkflowViewState.IdRef="If_2">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workflow - GL Acct" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A5</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_GL_Acc_Screenshotpath]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </If.Then>
+                            <If.Else>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workflow - GL Acct" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A115</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_GL_Acc_Screenshotpath]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </If.Else>
+                          </If>
+                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'saplogon.exe Multiple GLAcct'" sap:VirtualizedContainerService.HintSize="711.2,347.2" sap2010:WorkflowViewState.IdRef="WindowScope_4" InformativeScreenshot="7eff1c98aed7ac9f29721b062719f370" Selector="&lt;wnd app='saplogon.exe' cls='#32770' title='Multiple Selection for Account Number' /&gt;">
+                            <ui:WindowScope.Body>
+                              <ActivityAction x:TypeArguments="x:Object">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,200" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Button  Copy (F8)'" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="5d8ac848-b659-4469-bc38-61752a568e9a" InformativeScreenshot="93ec48ce4aff2883d4e82ff7dc68a77b" Selector="&lt;sap id='tbar[0]/btn[8]' /&gt;" WaitForReady="COMPLETE">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                      </ui:Target>
+                                    </ui:Click.Target>
+                                  </ui:Click>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:WindowScope.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:WindowScope>
+                          <Assign DisplayName="set GLcc path to default" sap:VirtualizedContainerService.HintSize="711.2,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[str_GL_cc_Screenshotpath]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Button Multiple CC'" sap:VirtualizedContainerService.HintSize="711.2,107.2" sap2010:WorkflowViewState.IdRef="Click_5" KeyModifiers="None" MouseButton="BTN_LEFT">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="792590c6-5e57-46a9-bfb9-ea101aa85fac" InformativeScreenshot="1f93ae40f27bd9adc4f514922774a5b8" Selector="&lt;sap id='usr/btn%_RBUKRS_%_APP_%-VALU_PUSH' /&gt;" WaitForReady="COMPLETE">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                              </ui:Target>
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke TakeScreenshot workflow - GL CC" sap:VirtualizedContainerService.HintSize="711.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework\TakeScreenshot.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_config("PS_RG_Parameters_ScreenshotPath").tostring.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring)]</InArgument>
+                              <InOutArgument x:TypeArguments="x:String" x:Key="io_FilePath">[str_GL_CC_Screenshotpath]</InOutArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                          <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - excel" sap:VirtualizedContainerService.HintSize="711.2,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_4" ProcessName="EXCEL" />
+                          <If Condition="[GL_variant.tostring.ToLower.Contains(&quot;prod&quot;)]" DisplayName="Check variant name" sap:VirtualizedContainerService.HintSize="711.2,272.8" sap2010:WorkflowViewState.IdRef="If_3">
+                            <If.Then>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workflow - CC" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A40</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_GL_CC_Screenshotpath]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </If.Then>
+                            <If.Else>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workflow - CC" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_12" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A145</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_GL_CC_Screenshotpath]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </If.Else>
+                          </If>
+                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'saplogon.exe Multiple CC'" sap:VirtualizedContainerService.HintSize="711.2,347.2" sap2010:WorkflowViewState.IdRef="WindowScope_5" InformativeScreenshot="7eff1c98aed7ac9f29721b062719f370" Selector="&lt;wnd app='saplogon.exe' cls='#32770' title='Multiple Selection for Company Code' /&gt;">
+                            <ui:WindowScope.Body>
+                              <ActivityAction x:TypeArguments="x:Object">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,200" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Button  Copy (F8)'" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="7fe0fc26-7186-4dbc-acc5-80d0c26c076d" InformativeScreenshot="93ec48ce4aff2883d4e82ff7dc68a77b" Selector="&lt;sap id='tbar[0]/btn[8]' /&gt;" WaitForReady="COMPLETE">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                      </ui:Target>
+                                    </ui:Click.Target>
+                                  </ui:Click>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:WindowScope.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:WindowScope>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Button  Execute (F8)'" sap:VirtualizedContainerService.HintSize="711.2,107.2" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="6ec81bf0-d079-4b70-b593-28e6ba35ff90" InformativeScreenshot="585ae7bc7c5669a6ed71cf55038513e0" Selector="&lt;sap id='tbar[1]/btn[8]' /&gt;" WaitForReady="COMPLETE">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                              </ui:Target>
+                            </ui:Click.Target>
+                          </ui:Click>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:WindowScope.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:WindowScope>
+                  <ui:OnUiElementAppear ContinueOnError="{x:Null}" FoundElement="{x:Null}" WaitActive="{x:Null}" WaitVisible="{x:Null}" DisplayName="On Element Appear 'Balance display: G/L'" sap:VirtualizedContainerService.HintSize="1069.6,2366.4" sap2010:WorkflowViewState.IdRef="OnUiElementAppear_2" RepeatForever="False">
+                    <ui:OnUiElementAppear.Body>
+                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1036,2189.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="set glbal path " sap:VirtualizedContainerService.HintSize="994.4,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_Prod_GL_ScreenshotPath]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">
+                              <Literal x:TypeArguments="x:String" Value="" />
+                            </InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Delay DisplayName="LongDelay" Duration="[Convert.ToDateTime(in_Config(&quot;LongDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="994.4,22.4" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke TakeScreenshot workflow - GL Variants" sap:VirtualizedContainerService.HintSize="994.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\TakeScreenshot.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_Folder">[in_config("PS_RG_Parameters_ScreenshotPath").tostring.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring)]</InArgument>
+                            <InOutArgument x:TypeArguments="x:String" x:Key="io_FilePath">[str_Prod_GL_ScreenshotPath]</InOutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ82" sap:VirtualizedContainerService.HintSize="994.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ82</InArgument>
+                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+                            <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+                            <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+                            <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+                            <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+                            <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process - excel" sap:VirtualizedContainerService.HintSize="994.4,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_2" ProcessName="EXCEL" />
+                        <If Condition="[GL_variant.tostring.ToLower.Contains(&quot;prod&quot;)]" DisplayName="Check variant name" sap:VirtualizedContainerService.HintSize="994.4,272.8" sap2010:WorkflowViewState.IdRef="If_1">
+                          <If.Then>
+                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workflow - GL balance" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                              <ui:InvokeWorkflowFile.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A80</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_Prod_GL_ScreenshotPath]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                              </ui:InvokeWorkflowFile.Arguments>
+                            </ui:InvokeWorkflowFile>
+                          </If.Then>
+                          <If.Else>
+                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Excel_SaveScreenshot workf - GL balance" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Excel_SaveScreenshot.xaml">
+                              <ui:InvokeWorkflowFile.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInSheetName">GL</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInCellAddress">A175</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInScreenshotFilePath">[str_Prod_GL_ScreenshotPath]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInTemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="argInBalance" />
+                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_config]</InArgument>
+                              </ui:InvokeWorkflowFile.Arguments>
+                            </ui:InvokeWorkflowFile>
+                          </If.Else>
+                        </If>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="994.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;GL Balance captured for:&quot;+GL_variant.ToString]" />
+                        <If Condition="[GL_variant.ToString.trim.ToLower.Contains(&quot;prod&quot;)]" DisplayName="Check GL variant" sap:VirtualizedContainerService.HintSize="994.4,832" sap2010:WorkflowViewState.IdRef="If_4">
+                          <If.Then>
+                            <Sequence DisplayName="Products GL Data Scraping" sap:VirtualizedContainerService.HintSize="475.2,672.8" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable_Products" />
+                              </Sequence.Variables>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Extract GL data for Products&quot;]" />
+                              <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'BalanceDi Sap_front'" sap:VirtualizedContainerService.HintSize="433.6,447.2" sap2010:WorkflowViewState.IdRef="WindowScope_6" InformativeScreenshot="2c9844402d5101ca910497a965cb549a" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='Balance Display: G/L Accounts For the Ledger 0L' /&gt;">
+                                <ui:WindowScope.Body>
+                                  <ActivityAction x:TypeArguments="x:Object">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,300" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[ExtractDataTable_Products]" DisplayName="Extract Structured Data 'GridView  SAPGUI.GridVi...'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest' /&gt;" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="ExtractData_1" MaxNumberOfResults="100" SimulateClick="True">
+                                        <ui:ExtractData.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="75ba34aa-1e3a-4891-b49b-10c67c944bda" InformativeScreenshot="459eb7966072e684c4040ec04a845db4" Selector="&lt;sap id='usr/cntlFDBL_BALANCE_CONTAINER/shellcont/shell' /&gt;" WaitForReady="COMPLETE">
+                                            <ui:Target.TimeoutMS>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:Target.TimeoutMS>
+                                          </ui:Target>
+                                        </ui:ExtractData.Target>
+                                      </ui:ExtractData>
+                                      <Assign sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="sd:DataTable">[out_ProductsGL]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="sd:DataTable">[ExtractDataTable_Products]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:WindowScope.Body>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:WindowScope>
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence DisplayName="Serv GL Data Scraping" sap:VirtualizedContainerService.HintSize="475.2,672.8" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable_Service" />
+                              </Sequence.Variables>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Extract GL data for Services&quot;]" />
+                              <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'BalanceDi Sap_front'" sap:VirtualizedContainerService.HintSize="433.6,447.2" sap2010:WorkflowViewState.IdRef="WindowScope_7" InformativeScreenshot="c30fc4dd9489313d63acba5c62f3706a" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='Balance Display: G/L Accounts For the Ledger 0L' /&gt;">
+                                <ui:WindowScope.Body>
+                                  <ActivityAction x:TypeArguments="x:Object">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,300" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[ExtractDataTable_Service]" DisplayName="Extract Structured Data 'GridView  SAPGUI.GridVi...'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest' /&gt;" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="ExtractData_2" MaxNumberOfResults="100" SimulateClick="True">
+                                        <ui:ExtractData.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="c9c7a18c-2103-4d56-a8fc-6b7ca8ec8e31" InformativeScreenshot="d596f9de71f2fe0e492c29cf5cdbac82" Selector="&lt;sap id='usr/cntlFDBL_BALANCE_CONTAINER/shellcont/shell' /&gt;" WaitForReady="COMPLETE">
+                                            <ui:Target.TimeoutMS>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:Target.TimeoutMS>
+                                          </ui:Target>
+                                        </ui:ExtractData.Target>
+                                      </ui:ExtractData>
+                                      <Assign sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="sd:DataTable">[out_ServicesGL]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="sd:DataTable">[ExtractDataTable_Service]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:WindowScope.Body>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:WindowScope>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                        <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into '/n'" sap:VirtualizedContainerService.HintSize="994.4,135.2" sap2010:WorkflowViewState.IdRef="TypeInto_5" Text="/n[k(enter)]">
+                          <ui:TypeInto.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9b4da0a8-25e2-43b1-99c1-1cb3b8467eca" InformativeScreenshot="7964fbeea26cc4c238e7ed59d01ee304" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='Balance Display: G/L Accounts For the Ledger 0L' /&gt;&lt;sap id='tbar[0]/okcd' /&gt;" WaitForReady="COMPLETE">
+                              <ui:Target.TimeoutMS>
+                                <InArgument x:TypeArguments="x:Int32" />
+                              </ui:Target.TimeoutMS>
+                            </ui:Target>
+                          </ui:TypeInto.Target>
+                        </ui:TypeInto>
+                      </Sequence>
+                    </ui:OnUiElementAppear.Body>
+                    <ui:OnUiElementAppear.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="3bacdded-0e21-4c51-8ffb-8e6bda56da9b" InformativeScreenshot="7b70658d611ae559d1f5270e298bb03d" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='Balance Display: G/L Accounts For the Ledger*' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:OnUiElementAppear.Target>
+                  </ui:OnUiElementAppear>
+                </Sequence>
+              </ui:OnUiElementAppear.Body>
+              <ui:OnUiElementAppear.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="38950b1c-2303-452f-b6e9-96fb09ada192" InformativeScreenshot="4865b8c722d99a76fcef6ae3f47ff3d3" Selector="&lt;wnd app='saplogon.exe' cls='SAP_FRONTEND_SESSION' title='G/L Account Balance Display' /&gt;" TimeoutMS="5000">
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:OnUiElementAppear.Target>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:OnUiElementAppear>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ForEach>
+  </Sequence>
+</Activity>

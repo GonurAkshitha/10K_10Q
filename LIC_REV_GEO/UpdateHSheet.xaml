@@ -1,0 +1,399 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="test" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DicParameters" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_LogNotifications" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_OPFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_Actuals" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DT1" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DT2" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DT3" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DT4" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_DT5" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>634.666666666667,2676.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>test_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Update H sheet" sap:VirtualizedContainerService.HintSize="614.666666666667,2616.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="str_YearRange" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_FYHeaders" />
+      <Variable x:TypeArguments="x:String" Name="str_ColRefIndex" />
+      <Variable x:TypeArguments="x:String" Default="8" Name="str_RowIndex" />
+      <Variable x:TypeArguments="x:String" Name="str_Celladdress" />
+      <Variable x:TypeArguments="x:String" Name="str_CellRef" />
+      <Variable x:TypeArguments="x:String" Name="str_Totals" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="572.666666666667,2524.66666666667" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="[in_OPFilePath]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="538.666666666667,2416" sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelSelectRange DisplayName="Select range H sheet name A1" sap:VirtualizedContainerService.HintSize="496.666666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelSelectRange_1" Range="A1" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[DT_FYHeaders]" DisplayName="Read Range - 3" sap:VirtualizedContainerService.HintSize="496.666666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="A3" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" />
+            <Assign DisplayName="RefcolumnIndex" sap:VirtualizedContainerService.HintSize="496.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_ColRefIndex]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[DT_FYHeaders.Columns("FY "+in_DicParameters("Year").ToString).Ordinal.ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Switch x:TypeArguments="x:String" DisplayName="Switch - col ref" Expression="[Split(in_DicParameters(&quot;Input Quarter&quot;).tostring,&quot;/&quot;)(0).Replace(&quot;00&quot;,&quot;&quot;)]" sap:VirtualizedContainerService.HintSize="496.666666666667,212" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Sequence x:Key="1" sap:VirtualizedContainerService.HintSize="304,151.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign DisplayName="1 col ref index" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[str_ColRefIndex]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[(Convert.ToInt32(str_ColRefIndex)+1).tostring]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+              <Assign x:Key="2" DisplayName="2 col ref index" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_3">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_ColRefIndex]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[(Convert.ToInt32(str_ColRefIndex)+2).tostring]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign x:Key="3" DisplayName="3 col ref index" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_4">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_ColRefIndex]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[(Convert.ToInt32(str_ColRefIndex)+3).tostring]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign x:Key="4" DisplayName="4 col ref index" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_5">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[str_ColRefIndex]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[(Convert.ToInt32(str_ColRefIndex)+4).tostring]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Switch>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="496.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;=Address(&quot;+str_RowIndex+&quot;,&quot;+str_ColRefIndex+&quot;)&quot;]" />
+            <ui:ExcelWriteCell Cell="A2" DisplayName="Write Cell - to get address" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" Text="[&quot;=Address(&quot;+str_RowIndex+&quot;,&quot;+str_ColRefIndex+&quot;)&quot;]" />
+            <ui:ExcelReadCell Cell="A2" DisplayName="Read Cell - A3" sap:VirtualizedContainerService.HintSize="496.666666666667,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:String">[str_Celladdress]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <Assign DisplayName="Assign - cell ref" sap:VirtualizedContainerService.HintSize="496.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_CellRef]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[str_Celladdress.Replace("8","")]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_DT1]" DisplayName="Write Range - DT1" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" StartingCell="[str_Celladdress]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_DT2]" DisplayName="Write Range - Dt2" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" StartingCell="[str_CellRef+(in_DT1.rows.Count+4+8).tostring]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_DT3]" DisplayName="Write Range - Dt3" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_4" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" StartingCell="[str_CellRef+(in_DT2.rows.Count+in_DT1.rows.Count+8+8).tostring]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_DT4]" DisplayName="Write Range - Dt4" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" StartingCell="[str_CellRef+(in_DT2.rows.Count+in_DT3.rows.Count+in_DT1.rows.Count+11+8).tostring]" />
+            <ui:ExcelWriteCell Cell="A3" DisplayName="Write Cell - resetn value of A3" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]">
+              <ui:ExcelWriteCell.Text>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:ExcelWriteCell.Text>
+            </ui:ExcelWriteCell>
+            <Assign sap:VirtualizedContainerService.HintSize="496.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_Totals]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[in_config("10K_10Q_Totals").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="496.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;=&quot;+str_CellRef+&quot;8&quot;+&quot;+&quot;+Split(str_Totals,&quot;,&quot;)(0)]" />
+            <ui:ExcelWriteCell Cell="[str_CellRef+&quot;53&quot;]" DisplayName="Write Cell - total1" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" Text="[&quot;=&quot;+str_CellRef+&quot;8&quot;+&quot;+&quot;+Split(str_Totals,&quot;,&quot;)(0)]" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="496.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;=&quot;+str_CellRef+&quot;47&quot;+&quot;+&quot;+Split(str_Totals,&quot;,&quot;)(1)]" />
+            <ui:ExcelWriteCell Cell="[str_CellRef+&quot;54&quot;]" DisplayName="Write Cell - total2" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_4" SheetName="[in_config(&quot;LIC_REV_GEO_byGEO_Sheetname&quot;).ToString]" Text="[&quot;=&quot;+str_CellRef+&quot;47&quot;+&quot;+&quot;+Split(str_Totals,&quot;,&quot;)(1)]" />
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="496.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="242,144.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'EXCEL.EXE H'" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="ac594369604ec57f49b37edc4e9ac354" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='H &amp;amp; J_Prod and Serv Rev by GEO and Country*' /&gt;">
+                    <ui:WindowScope.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="538.666666666667,1590.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'Pane  Ribbon Tabs'" sap:VirtualizedContainerService.HintSize="496.666666666667,155.333333333333" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="f" KeyModifiers="Ctrl">
+                            <ui:SendHotkey.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="554cd1f2c198e5b67d9e346957f04c6f">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                                <ui:Target.WaitForReady>
+                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                </ui:Target.WaitForReady>
+                              </ui:Target>
+                            </ui:SendHotkey.Target>
+                          </ui:SendHotkey>
+                          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'EXCEL.EXE Find'" sap:VirtualizedContainerService.HintSize="496.666666666667,664" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="c3cbc4c5f9c709e10d30b79bcc42b63b" Selector="&lt;wnd app='excel.exe' cls='bosa_sdm_XL9' title='Find and Replace' /&gt;">
+                            <ui:WindowScope.Body>
+                              <ActivityAction x:TypeArguments="x:Object">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,518" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'EDTBX'" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[&quot;FY &quot;+in_DicParameters(&quot;Year&quot;).ToString]">
+                                    <ui:TypeInto.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="cc0bf0f887a362ce0870c3594cb7dfc5" Selector="&lt;wnd cls='EDTBX' idx='1' /&gt;">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                        <ui:Target.WaitForReady>
+                                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                                        </ui:Target.WaitForReady>
+                                      </ui:Target>
+                                    </ui:TypeInto.Target>
+                                  </ui:TypeInto>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button  Find Next'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="247297589fe4a77a35859017b75d72cb" Selector="&lt;ctrl name='Find Next' role='push button' /&gt;">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                        <ui:Target.WaitForReady>
+                                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                                        </ui:Target.WaitForReady>
+                                      </ui:Target>
+                                    </ui:Click.Target>
+                                  </ui:Click>
+                                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'push button  Close'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                    <ui:Click.CursorPosition>
+                                      <ui:CursorPosition Position="Center">
+                                        <ui:CursorPosition.OffsetX>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetX>
+                                        <ui:CursorPosition.OffsetY>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:CursorPosition.OffsetY>
+                                      </ui:CursorPosition>
+                                    </ui:Click.CursorPosition>
+                                    <ui:Click.Target>
+                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="c0d2e5530d82ab614d78950ba4517190" Selector="&lt;ctrl idx='2' name='Close' role='push button' /&gt;">
+                                        <ui:Target.TimeoutMS>
+                                          <InArgument x:TypeArguments="x:Int32" />
+                                        </ui:Target.TimeoutMS>
+                                        <ui:Target.WaitForReady>
+                                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                                        </ui:Target.WaitForReady>
+                                      </ui:Target>
+                                    </ui:Click.Target>
+                                  </ui:Click>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:WindowScope.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:WindowScope>
+                          <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[Split(in_DicParameters(&quot;Input Quarter&quot;).ToString,&quot;/&quot;)(0).Replace(&quot;00&quot;,&quot;&quot;)]" sap:VirtualizedContainerService.HintSize="496.666666666667,215.333333333333" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" x:Key="1" Activate="True" DisplayName="1" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_2" Text="%[k(down)][k(down)][k(down)][k(down)][k(down)]">
+                              <ui:TypeInto.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="135534ae8ff1361be0b55db560636896">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:TypeInto.Target>
+                            </ui:TypeInto>
+                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" x:Key="2" Activate="True" DisplayName="2" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_3" Text="%%[k(down)][k(right)][k(down)][k(down)][k(down)][k(down)][k(down)]">
+                              <ui:TypeInto.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="135534ae8ff1361be0b55db560636896">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:TypeInto.Target>
+                            </ui:TypeInto>
+                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" x:Key="3" Activate="True" DisplayName="3" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_4" Text="%[k(down)]k(right)][k(right)][k(down)][k(down)][k(down)][k(down)]">
+                              <ui:TypeInto.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="135534ae8ff1361be0b55db560636896">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:TypeInto.Target>
+                            </ui:TypeInto>
+                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" x:Key="4" Activate="True" DisplayName="4" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_5" Text="%[k(down)]k(right)][k(right)][k(right)][k(down)][k(down)][k(down)][k(down)]">
+                              <ui:TypeInto.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="135534ae8ff1361be0b55db560636896">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:TypeInto.Target>
+                            </ui:TypeInto>
+                          </Switch>
+                          <ui:ExcelGetSelectedRange DisplayName="Get Selected Range" sap:VirtualizedContainerService.HintSize="496.666666666667,22" sap2010:WorkflowViewState.IdRef="ExcelGetSelectedRange_1" Range="[str_YearRange]" />
+                          <ui:ExcelWriteRange AddHeaders="False" DataTable="[in_Actuals]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="496.666666666667,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="[in_config(&quot;PS_RG_HSheetName&quot;).ToString]" StartingCell="[str_YearRange]" />
+                          <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'Title Bar'" sap:VirtualizedContainerService.HintSize="496.666666666667,155.333333333333" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="s" KeyModifiers="Ctrl">
+                            <ui:SendHotkey.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" InformativeScreenshot="bdd43a2c83173f981cf6836e01ae738a">
+                                <ui:Target.TimeoutMS>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:Target.TimeoutMS>
+                                <ui:Target.WaitForReady>
+                                  <InArgument x:TypeArguments="ui:WaitForReady" />
+                                </ui:Target.WaitForReady>
+                              </ui:Target>
+                            </ui:SendHotkey.Target>
+                          </ui:SendHotkey>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:WindowScope.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:WindowScope>
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+  </Sequence>
+</Activity>

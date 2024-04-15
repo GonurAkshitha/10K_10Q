@@ -1,0 +1,633 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="PS_RevenueByGeo" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:sl="clr-namespace:System.Linq;assembly=System.Core" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DicParameters" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_logNotifications" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1104,785.6</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>PS_RevenueByGeo_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart DisplayName="PS_RevenueByGeo" sap:VirtualizedContainerService.HintSize="1048.8,720.8" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_Actuals" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_GL_Products" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_GL_Services" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT1" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT2" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT3" />
+      <Variable x:TypeArguments="x:Double" Name="Value4" />
+      <Variable x:TypeArguments="x:String" Name="str_zpl3_Products" />
+      <Variable x:TypeArguments="x:String" Name="str_zpl3_Services" />
+    </Flowchart.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <av:Point x:Key="ShapeLocation">50,22.6666666666667</av:Point>
+        <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+        <av:PointCollection x:Key="ConnectorLocation">110,60.2666666666667 140,60.2666666666667 140,59.7333333333333 220,59.7333333333333</av:PointCollection>
+        <x:Double x:Key="Height">683.99999999999989</x:Double>
+        <x:Double x:Key="Width">1014.9999999999999</x:Double>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Flowchart.StartNode>
+      <x:Reference>__ReferenceID12</x:Reference>
+    </Flowchart.StartNode>
+    <FlowStep x:Name="__ReferenceID12">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <av:Point x:Key="ShapeLocation">220,25.6</av:Point>
+          <av:Size x:Key="ShapeSize">200,68.8</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">420,59.7333333333333 450,59.7333333333333 450,60.0666666666667 530,60.0666666666667</av:PointCollection>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Sequence DisplayName="2 Copy files from Box location to local folder " sap:VirtualizedContainerService.HintSize="200,68.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ75" sap:VirtualizedContainerService.HintSize="475.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ75</InArgument>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+            <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+            <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+            <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+            <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+        <ui:CreateDirectory ContinueOnError="True" DisplayName="Create Folder - OP_PS_RG" sap:VirtualizedContainerService.HintSize="475.2,80.8" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString)]" />
+        <ui:CreateDirectory ContinueOnError="True" DisplayName="Create Folder - Temp_PS_RG" sap:VirtualizedContainerService.HintSize="475.2,80.8" sap2010:WorkflowViewState.IdRef="CreateDirectory_2" Path="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_TempFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString)]" />
+        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_TempFolder&quot;).ToString,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_config(&quot;PS_RG_BI_ProductsTemplateName&quot;).ToString+&quot;.xlsx&quot;)]" DisplayName="Copy BI Prod File" sap:VirtualizedContainerService.HintSize="475.2,160" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="True" Path="[Path.Combine(in_Config(&quot;PS_RG_BI_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_config(&quot;PS_RG_BI_ProductsTemplateName&quot;).ToString+&quot;.xlsx&quot;)]" />
+        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_TempFolder&quot;).ToString,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_config(&quot;PS_RG_BI_ServicesTemplateName&quot;).ToString+&quot;.xlsx&quot;)]" DisplayName="Copy BI ServFile" sap:VirtualizedContainerService.HintSize="475.2,160" sap2010:WorkflowViewState.IdRef="CopyFile_2" Overwrite="True" Path="[Path.Combine(in_Config(&quot;PS_RG_BI_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_config(&quot;PS_RG_BI_ServicesTemplateName&quot;).ToString+&quot;.xlsx&quot;)]" />
+        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_TempFolder&quot;).ToString,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_config(&quot;PS_RG_BI_ProductsTemplateName&quot;).ToString+&quot;_NoValue.xlsx&quot;)]" DisplayName="Copy BI Prod File - NoValue" sap:VirtualizedContainerService.HintSize="475.2,160" sap2010:WorkflowViewState.IdRef="CopyFile_5" Overwrite="True" Path="[Path.Combine(in_Config(&quot;PS_RG_BI_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_config(&quot;PS_RG_BI_ProductsTemplateName&quot;).ToString+&quot;_NoValue.xlsx&quot;)]" />
+        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_TempFolder&quot;).ToString,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_config(&quot;PS_RG_BI_ServicesTemplateName&quot;).ToString+&quot;_NoValue.xlsx&quot;)]" DisplayName="Copy BI ServFile - NoValue" sap:VirtualizedContainerService.HintSize="475.2,160" sap2010:WorkflowViewState.IdRef="CopyFile_6" Overwrite="True" Path="[Path.Combine(in_Config(&quot;PS_RG_BI_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_config(&quot;PS_RG_BI_ServicesTemplateName&quot;).ToString+&quot;_NoValue.xlsx&quot;)]" />
+        <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="475.2,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+          <ui:CommentOut.Body>
+            <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="475.2,252.8" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring+&quot;.xlsx&quot;)]" DisplayName="Copy output template File" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="CopyFile_8" Overwrite="False" Path="[Path.Combine(in_Config(&quot;PS_RG_OutputTemplate_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_config(&quot;Run_Environment&quot;).ToString),in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring+&quot;.xlsx&quot;)]" />
+            </Sequence>
+          </ui:CommentOut.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:CommentOut>
+        <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="475.2,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+          <ui:CommentOut.Body>
+            <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="524.8,312" sap2010:WorkflowViewState.IdRef="Sequence_9">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If Condition="[in_DicParameters(&quot;Input Quarter&quot;).ToString.contains(&quot;001&quot;)]" DisplayName="Check current quarter - new/old" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="If_2">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Else>
+                  <Sequence DisplayName="2 Copy OP file" sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)" Name="lst_OPFiles" />
+                      <Variable x:TypeArguments="x:String" Name="str_LatestOPFilePath" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Copy output file to temp location from previous quarter to process&quot;]" />
+                    <Assign DisplayName="Get OP files in a list" sap:VirtualizedContainerService.HintSize="384,62" sap2010:WorkflowViewState.IdRef="Assign_3">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)">[lst_OPFiles]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)">[new DirectoryInfo(in_Config("PS_RG_Output_BoxLocation").ToString.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring)).GetFiles().OrderByDescending(Function(x) x.LastWriteTime)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign DisplayName="str_OPFile" sap:VirtualizedContainerService.HintSize="384,62" sap2010:WorkflowViewState.IdRef="Assign_4">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[str_LatestOPFilePath]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[Path.combine(in_Config("PS_RG_Output_BoxLocation").ToString.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring),lst_OPFiles(0).tostring)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[Path.combine(in_Config(&quot;PS_RG_Output_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),lst_OPFiles(0).tostring)]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,lst_OPFiles(0).tostring)]" />
+                    <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring+&quot;.xlsx&quot;)]" DisplayName="Copy output template File" sap:VirtualizedContainerService.HintSize="384,162" sap2010:WorkflowViewState.IdRef="CopyFile_7" Overwrite="False" Path="[str_LatestOPFilePath]" />
+                  </Sequence>
+                </If.Else>
+              </If>
+            </Sequence>
+          </ui:CommentOut.Body>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:CommentOut>
+        <Sequence DisplayName="Copy OP file quarter 1" sap:VirtualizedContainerService.HintSize="475.2,851.2" sap2010:WorkflowViewState.IdRef="Sequence_8">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)" Name="lst_OPFiles" />
+            <Variable x:TypeArguments="x:String" Name="str_LatestOPFilePath" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;1 Copy output file to temp location from previous quarter to process&quot;]" />
+          <Assign DisplayName="Get OP files in a list" sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)">[lst_OPFiles]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sl:IOrderedEnumerable(si:FileInfo)">[new DirectoryInfo(in_Config("PS_RG_Output_BoxLocation").ToString.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring)).GetFiles().OrderByDescending(Function(x) x.LastWriteTime)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="str_OPFile" sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_LatestOPFilePath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Path.combine(in_Config("PS_RG_Output_BoxLocation").ToString.Replace("&lt;username&gt;",Environment.UserName).Replace("&lt;env&gt;",in_Config("Run_Environment").tostring),lst_OPFiles(0).tostring)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[Path.combine(in_Config(&quot;PS_RG_Output_BoxLocation&quot;).ToString.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),lst_OPFiles(0).tostring)]" />
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,lst_OPFiles(0).tostring)]" />
+          <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring+&quot;.xlsx&quot;)]" DisplayName="Copy output template File" sap:VirtualizedContainerService.HintSize="433.6,160" sap2010:WorkflowViewState.IdRef="CopyFile_9" Overwrite="False" Path="[str_LatestOPFilePath]" />
+        </Sequence>
+        <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="475.2,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="saplogon" />
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SAP750LOGON workflow" sap:VirtualizedContainerService.HintSize="475.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="SAP_Login\SAP750LOGON.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="argStrSAPUsername" />
+            <InArgument x:TypeArguments="x:String" x:Key="argStrSAPPassword" />
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argDicConfig">[in_Config]</InArgument>
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="ardDtLogNotifications">[in_logNotifications]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </Sequence>
+      <FlowStep.Next>
+        <FlowStep x:Name="__ReferenceID11">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <av:Point x:Key="ShapeLocation">530,33.6666666666667</av:Point>
+              <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+              <av:PointCollection x:Key="ConnectorLocation">730,60 760,60 760,113.666666666667 100,113.666666666667 100,143.666666666667</av:PointCollection>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Cleanup File workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\Cleanup File.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="in_TemplatePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:InvokeWorkflowFile>
+          <FlowStep.Next>
+            <FlowStep x:Name="__ReferenceID6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <av:Point x:Key="ShapeLocation">0,143.666666666667</av:Point>
+                  <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">200,170 230,170 230,160 310,160</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke GetGLBalances workflow" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\GetGLBalances.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+                    <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">
+                    <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_DicParameters" />
+                  </InArgument>
+                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">
+                    <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="in_logNotifications" />
+                  </InArgument>
+                  <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_ProductsGL">
+                    <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="DT_GL_Products" />
+                  </OutArgument>
+                  <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_ServicesGL">
+                    <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="DT_GL_Services" />
+                  </OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:InvokeWorkflowFile>
+              <FlowStep.Next>
+                <FlowStep x:Name="__ReferenceID10">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">310,133.666666666667</av:Point>
+                      <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">510,160 580,160</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke GLConsolidation_GR55_ZPL3 workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\GLConsolidation_GR55_ZPL3.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_lognotifications">[in_logNotifications]</InArgument>
+                      <OutArgument x:TypeArguments="x:String" x:Key="out_Zpl3screenshot" />
+                      <InArgument x:TypeArguments="x:String" x:Key="in_OPFile">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                      <OutArgument x:TypeArguments="x:String" x:Key="out_zpl3Value_Services">[str_zpl3_Services]</OutArgument>
+                      <OutArgument x:TypeArguments="x:String" x:Key="out_Zpl3Value_Products">[str_zpl3_Products]</OutArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <FlowStep.Next>
+                    <FlowStep x:Name="__ReferenceID0">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <av:Point x:Key="ShapeLocation">580,133.666666666667</av:Point>
+                          <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                          <av:PointCollection x:Key="ConnectorLocation">680,186.333333333333 680,216.333333333333 320,216.333333333333 320,233.666666666667</av:PointCollection>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke RunProductRevenueBI workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\RunProductRevenueBI.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:InvokeWorkflowFile>
+                      <FlowStep.Next>
+                        <FlowStep x:Name="__ReferenceID1">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">220,233.666666666667</av:Point>
+                              <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                              <av:PointCollection x:Key="ConnectorLocation">320,286.333333333334 320,313.666666666667</av:PointCollection>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke RunServiceRevenueBI workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\RunServiceRevenueBI.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:InvokeWorkflowFile>
+                          <FlowStep.Next>
+                            <FlowStep x:Name="__ReferenceID3">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <av:Point x:Key="ShapeLocation">220,313.666666666667</av:Point>
+                                  <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                  <av:PointCollection x:Key="ConnectorLocation">320,366.333333333333 320,393.666666666667</av:PointCollection>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke RunProductRevenueBINoValue workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\RunProductRevenueBINoValue.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:InvokeWorkflowFile>
+                              <FlowStep.Next>
+                                <FlowStep x:Name="__ReferenceID4">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <av:Point x:Key="ShapeLocation">220,393.666666666667</av:Point>
+                                      <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                      <av:PointCollection x:Key="ConnectorLocation">320,446.333333333333 320,463.666666666667</av:PointCollection>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke RunServiceRevenueBINoValue workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\RunServiceRevenueBINoValue.xaml">
+                                    <ui:InvokeWorkflowFile.Arguments>
+                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                                    </ui:InvokeWorkflowFile.Arguments>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:InvokeWorkflowFile>
+                                  <FlowStep.Next>
+                                    <FlowStep x:Name="__ReferenceID5">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <av:Point x:Key="ShapeLocation">220,463.666666666667</av:Point>
+                                          <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                          <av:PointCollection x:Key="ConnectorLocation">320,516.333333333334 320,590 450,590</av:PointCollection>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke CombineProdServ workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo/UpdatePnSSheets.xaml">
+                                        <ui:InvokeWorkflowFile.Arguments>
+                                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                                          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_Actuals">[DT_Actuals]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:String" x:Key="out_ProdCount" />
+                                          <OutArgument x:TypeArguments="x:String" x:Key="out_ServCount" />
+                                          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DT1">[DT1]</OutArgument>
+                                          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DT2">[DT2]</OutArgument>
+                                          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_DT3">[Dt3]</OutArgument>
+                                          <OutArgument x:TypeArguments="x:Double" x:Key="out_Value4">[Value4]</OutArgument>
+                                        </ui:InvokeWorkflowFile.Arguments>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:InvokeWorkflowFile>
+                                      <FlowStep.Next>
+                                        <FlowStep x:Name="__ReferenceID7">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <av:Point x:Key="ShapeLocation">450,563.666666666667</av:Point>
+                                              <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                              <av:PointCollection x:Key="ConnectorLocation">550,563.666666666667 550,516.333333333333</av:PointCollection>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke UpdateHSheet workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\UpdateHSheet.xaml">
+                                            <ui:InvokeWorkflowFile.Arguments>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_LogNotifications">[in_logNotifications]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="in_OPFilePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="in_Actuals">[DT_Actuals]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="DT1">[DT1]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="DT2">[DT2]</InArgument>
+                                              <InArgument x:TypeArguments="sd:DataTable" x:Key="DT3">[DT3]</InArgument>
+                                              <InArgument x:TypeArguments="x:Double" x:Key="Value4">[Value4]</InArgument>
+                                            </ui:InvokeWorkflowFile.Arguments>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:InvokeWorkflowFile>
+                                          <FlowStep.Next>
+                                            <FlowStep x:Name="__ReferenceID8">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <av:Point x:Key="ShapeLocation">450,463.666666666667</av:Point>
+                                                  <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                                  <av:PointCollection x:Key="ConnectorLocation">650,490 780,490 780,446.333333333333</av:PointCollection>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke UpdateJSheet workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_15" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\UpdateJSheet.xaml">
+                                                <ui:InvokeWorkflowFile.Arguments>
+                                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_logNotifications">[in_logNotifications]</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="in_OPFile">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                                  <InArgument x:TypeArguments="sd:DataTable" x:Key="in_combinedData" />
+                                                </ui:InvokeWorkflowFile.Arguments>
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                              </ui:InvokeWorkflowFile>
+                                              <FlowStep.Next>
+                                                <FlowStep x:Name="__ReferenceID9">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <av:Point x:Key="ShapeLocation">680,393.666666666667</av:Point>
+                                                      <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                                                      <av:PointCollection x:Key="ConnectorLocation">780,393.666666666667 780,380 650,380</av:PointCollection>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke UpdateOutputGLSheet workflow" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="PS_RevenuebyGeo\UpdateOutputGLSheet.xaml">
+                                                    <ui:InvokeWorkflowFile.Arguments>
+                                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_config">[in_Config]</InArgument>
+                                                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_DicParameters">[in_DicParameters]</InArgument>
+                                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_logNotifications">[in_logNotifications]</InArgument>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="in_OPFilePath">[Path.Combine(Environment.CurrentDirectory,in_Config("Local_OPFolder").tostring,in_Config("PS_RG_FolderName").ToString,in_Config("PS_RG_OutputTemplate_FileName").tostring+".xlsx")]</InArgument>
+                                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_BIPull" />
+                                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_GLBalances_products">[DT_GL_Products]</InArgument>
+                                                      <InArgument x:TypeArguments="sd:DataTable" x:Key="in_GLBalances_services">[DT_GL_Services]</InArgument>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="in_zpl3_Products">[str_zpl3_Products]</InArgument>
+                                                      <InArgument x:TypeArguments="x:String" x:Key="in_zpl3_Services">[str_zpl3_Services]</InArgument>
+                                                    </ui:InvokeWorkflowFile.Arguments>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </ui:InvokeWorkflowFile>
+                                                  <FlowStep.Next>
+                                                    <FlowStep x:Name="__ReferenceID2">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <av:Point x:Key="ShapeLocation">450,345.333333333333</av:Point>
+                                                          <av:Size x:Key="ShapeSize">200,68.8</av:Size>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <Sequence DisplayName="Copy file and send mail notification" sap:VirtualizedContainerService.HintSize="200,68.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                                                        <Sequence.Variables>
+                                                          <Variable x:TypeArguments="x:String" Name="str_BoxURL" />
+                                                        </Sequence.Variables>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ73" sap:VirtualizedContainerService.HintSize="570,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+                                                          <ui:InvokeWorkflowFile.Arguments>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ73</InArgument>
+                                                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+                                                            <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+                                                            <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+                                                            <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+                                                          </ui:InvokeWorkflowFile.Arguments>
+                                                        </ui:InvokeWorkflowFile>
+                                                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="570,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[Path.Combine(in_Config(&quot;PS_RG_Output_BoxLocation&quot;).tostring.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring.Replace(&quot;#&quot;,&quot;Q&quot;+Split(in_dicparameters(&quot;Input Quarter&quot;).ToString,&quot;/&quot;)(0).Replace(&quot;00&quot;,&quot;&quot;)+&quot; &quot;+in_DicParameters(&quot;Year&quot;).tostring)+&quot;.xlsx&quot;)]" />
+                                                        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[Path.Combine(in_Config(&quot;PS_RG_Output_BoxLocation&quot;).tostring.Replace(&quot;&lt;username&gt;&quot;,Environment.UserName).Replace(&quot;&lt;env&gt;&quot;,in_Config(&quot;Run_Environment&quot;).tostring),in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring.Replace(&quot;#&quot;,&quot;Q&quot;+Split(in_dicparameters(&quot;Input Quarter&quot;).ToString,&quot;/&quot;)(0).Replace(&quot;00&quot;,&quot;&quot;)+&quot; &quot;+in_DicParameters(&quot;Year&quot;).tostring)+&quot;.xlsx&quot;)]" DisplayName="Copy OP File to Box" sap:VirtualizedContainerService.HintSize="570,162" sap2010:WorkflowViewState.IdRef="CopyFile_4" Overwrite="True" Path="[Path.Combine(Environment.CurrentDirectory,in_Config(&quot;Local_OPFolder&quot;).tostring,in_Config(&quot;PS_RG_FolderName&quot;).ToString,in_Config(&quot;PS_RG_OutputTemplate_FileName&quot;).tostring+&quot;.xlsx&quot;)]">
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                        </ui:CopyFile>
+                                                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LogFile workflow - LOG-10KQ74" sap:VirtualizedContainerService.HintSize="570,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Log\LogFile.xaml">
+                                                          <ui:InvokeWorkflowFile.Arguments>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrLogNumber">LOG-10KQ74</InArgument>
+                                                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="argIdicConfig">[in_Config]</InArgument>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrKeyValues" />
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argIstrErrorScreenshot" />
+                                                            <InArgument x:TypeArguments="sd:DataTable" x:Key="argIdtLogNotification">[in_LogNotifications]</InArgument>
+                                                            <InArgument x:TypeArguments="x:String" x:Key="arglstrTechincalExceptionMessage" />
+                                                            <OutArgument x:TypeArguments="x:String" x:Key="argOException" />
+                                                            <InArgument x:TypeArguments="x:Int32" x:Key="argIstrTransactionID" />
+                                                            <InArgument x:TypeArguments="x:String" x:Key="argInDBConnectionString">[in_Config("DB_ConnectionString").ToString]</InArgument>
+                                                          </ui:InvokeWorkflowFile.Arguments>
+                                                        </ui:InvokeWorkflowFile>
+                                                        <If Condition="[in_Config(&quot;Run_Environment&quot;).tostring.ToLower=&quot;prod&quot;]" DisplayName="Check env and assign BoxURL" sap:VirtualizedContainerService.HintSize="570,216" sap2010:WorkflowViewState.IdRef="If_1">
+                                                          <If.Then>
+                                                            <Assign DisplayName="Set BoxURL -prd" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+                                                              <Assign.To>
+                                                                <OutArgument x:TypeArguments="x:String">[str_BoxURL]</OutArgument>
+                                                              </Assign.To>
+                                                              <Assign.Value>
+                                                                <InArgument x:TypeArguments="x:String">[in_Config("Box_PS_RG_URL_prod").tostring]</InArgument>
+                                                              </Assign.Value>
+                                                            </Assign>
+                                                          </If.Then>
+                                                          <If.Else>
+                                                            <Assign DisplayName="Set BoxURL - dev" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                                              <Assign.To>
+                                                                <OutArgument x:TypeArguments="x:String">[str_BoxURL]</OutArgument>
+                                                              </Assign.To>
+                                                              <Assign.Value>
+                                                                <InArgument x:TypeArguments="x:String">[in_Config("Box_PS_RG_URL_dev").tostring]</InArgument>
+                                                              </Assign.Value>
+                                                            </Assign>
+                                                          </If.Else>
+                                                        </If>
+                                                        <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" Body="[in_Config(&quot;Success_Mailbody&quot;).ToString.Replace(&quot;###&quot;,&quot;&quot;).Replace(&quot;##&quot;,&quot;Products and Services Revenue by GEO&quot;).Replace(&quot;#&quot;,str_boxURL)]" Cc="[in_Config(&quot;SupportMailRecipients&quot;).ToString]" DisplayName="Send Outlook Mail Message - Success" sap:VirtualizedContainerService.HintSize="570,149.333333333333" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" Importance="Normal" IsBodyHtml="True" IsDraft="False" Sensitivity="Normal" Subject="[in_Config(&quot;Success_MailSubject&quot;).tostring.Replace(&quot;##&quot;,&quot;Products and Services Revenue by GEO&quot;).Replace(&quot;#&quot;,now.Tostring(&quot;MM/dd/yyyy&quot;))]" To="[in_Config(&quot;PS_RG_BusinessMailRecipients&quot;).ToString]">
+                                                          <ui:SendOutlookMail.Files>
+                                                            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                                          </ui:SendOutlookMail.Files>
+                                                        </ui:SendOutlookMail>
+                                                        <Delay DisplayName="MaxDelay" Duration="[Convert.ToDateTime(in_Config(&quot;MaxDelay&quot;).tostring).TimeOfDay]" sap:VirtualizedContainerService.HintSize="570,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                                                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke KillAllProcesses workflow" sap:VirtualizedContainerService.HintSize="570,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Framework\KillAllProcesses.xaml">
+                                                          <ui:InvokeWorkflowFile.Arguments>
+                                                            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                                          </ui:InvokeWorkflowFile.Arguments>
+                                                        </ui:InvokeWorkflowFile>
+                                                      </Sequence>
+                                                    </FlowStep>
+                                                  </FlowStep.Next>
+                                                </FlowStep>
+                                              </FlowStep.Next>
+                                            </FlowStep>
+                                          </FlowStep.Next>
+                                        </FlowStep>
+                                      </FlowStep.Next>
+                                    </FlowStep>
+                                  </FlowStep.Next>
+                                </FlowStep>
+                              </FlowStep.Next>
+                            </FlowStep>
+                          </FlowStep.Next>
+                        </FlowStep>
+                      </FlowStep.Next>
+                    </FlowStep>
+                  </FlowStep.Next>
+                </FlowStep>
+              </FlowStep.Next>
+            </FlowStep>
+          </FlowStep.Next>
+        </FlowStep>
+      </FlowStep.Next>
+    </FlowStep>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID4</x:Reference>
+    <x:Reference>__ReferenceID5</x:Reference>
+    <x:Reference>__ReferenceID6</x:Reference>
+    <x:Reference>__ReferenceID7</x:Reference>
+    <x:Reference>__ReferenceID8</x:Reference>
+    <x:Reference>__ReferenceID9</x:Reference>
+    <x:Reference>__ReferenceID10</x:Reference>
+    <x:Reference>__ReferenceID11</x:Reference>
+  </Flowchart>
+</Activity>

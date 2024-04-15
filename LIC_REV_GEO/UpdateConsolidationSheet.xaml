@@ -1,0 +1,721 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="UpdateConsolidationSheet" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DicParameters" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_BIData" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_OPFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_VIA" Type="InArgument(x:String)" />
+    <x:Property Name="in_VIAPivot" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_Reserves" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="out_DT1" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_DT2" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_DT3" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_DT4" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_DT5" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_ConsolidatedData" Type="OutArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1153.33333333333,10628</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>UpdateConsolidationSheet_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities.Design</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="UpdateConsolidationSheet" sap:VirtualizedContainerService.HintSize="640,10563.3333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BIData" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BI_FinalforCons" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BI_ConsolidatedCountry" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BI_ConsolidatedCountry_Amount" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIA1" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIA2" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIAAdmin_Country1" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIAAdmin_Country2" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIAAdmin_Amnt1" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIAAdmin_Amnt2" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BICons_Country_Final" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_BICons_Amnt_Final" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_ConsolidationPivot" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_VIAAdmin" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_ReservesCountry" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_ReservesAmnt" />
+      <Variable x:TypeArguments="x:Int32" Name="int_reservesCount" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DT_CountryLookup" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_Temp" />
+      <Variable x:TypeArguments="x:Double" Name="str_L44_Total" />
+      <Variable x:TypeArguments="x:Double" Name="str_N44_Total" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:FilterDataTable DataTable="[in_Reserves]" DisplayName="1 Filter Data Table" sap:VirtualizedContainerService.HintSize="598,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_9" OutputDataTable="[DT_ReservesCountry]" SelectColumnsMode="Keep">
+      <ui:FilterDataTable.Filters>
+        <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+          <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+        </scg:List>
+      </ui:FilterDataTable.Filters>
+      <ui:FilterDataTable.SelectColumns>
+        <scg:List x:TypeArguments="InArgument" Capacity="4">
+          <InArgument x:TypeArguments="x:String">["Country"]</InArgument>
+        </scg:List>
+      </ui:FilterDataTable.SelectColumns>
+    </ui:FilterDataTable>
+    <Assign sap:VirtualizedContainerService.HintSize="598,62" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[int_reservesCount]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">[DT_ReservesCountry.rows.Count]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:FilterDataTable DataTable="[in_Reserves]" DisplayName="2 Filter Data Table" sap:VirtualizedContainerService.HintSize="598,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_10" OutputDataTable="[DT_ReservesAmnt]" SelectColumnsMode="Keep">
+      <ui:FilterDataTable.Filters>
+        <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+          <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+        </scg:List>
+      </ui:FilterDataTable.Filters>
+      <ui:FilterDataTable.SelectColumns>
+        <scg:List x:TypeArguments="InArgument" Capacity="4">
+          <InArgument x:TypeArguments="x:String">["Amount"]</InArgument>
+        </scg:List>
+      </ui:FilterDataTable.SelectColumns>
+    </ui:FilterDataTable>
+    <ui:KillProcess AppliesTo="{x:Null}" Process="{x:Null}" ContinueOnError="True" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="598,135.333333333333" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="excel" />
+    <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="598,9788.66666666667" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" WorkbookPath="[in_OPFilePath]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="564,9680" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[DT_CountryLookup]" DisplayName="Read Range - Country Lookup" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_14" Range="A1" SheetName="Country Lookup" />
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[DT_BIData]" DisplayName="Read Range - BIData" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="A4" SheetName="[in_config(&quot;BI_SheetName&quot;).ToString]" />
+            <ui:FilterDataTable DataTable="[DT_BIData]" DisplayName="Filter Data Table - remove reserves" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_11" OutputDataTable="[DT_BIData]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
+                    <ui:FilterOperationArgument.Column>
+                      <InArgument x:TypeArguments="x:String">["LMALA Comments"]</InArgument>
+                    </ui:FilterOperationArgument.Column>
+                    <ui:FilterOperationArgument.Operand>
+                      <InArgument x:TypeArguments="x:String">["return reserve revenue"]</InArgument>
+                    </ui:FilterOperationArgument.Operand>
+                  </ui:FilterOperationArgument>
+                  <ui:FilterOperationArgument BooleanOperator="And" Operator="LT">
+                    <ui:FilterOperationArgument.Column>
+                      <InArgument x:TypeArguments="x:String">["LMALA Comments"]</InArgument>
+                    </ui:FilterOperationArgument.Column>
+                    <ui:FilterOperationArgument.Operand>
+                      <InArgument x:TypeArguments="x:String">["initial fee reserve"]</InArgument>
+                    </ui:FilterOperationArgument.Operand>
+                  </ui:FilterOperationArgument>
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <x:Null />
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[DT_VIAAdmin]" DisplayName="viadmin" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" Range="A1" SheetName="VIA Admin" />
+            <ui:FilterDataTable DataTable="[DT_VIAAdmin]" DisplayName="Filter Data Table - VIA Admin Country" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_12" OutputDataTable="[DT_VIAAdmin_Country1]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["Column1"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <ui:FilterDataTable DataTable="[DT_VIAAdmin]" DisplayName="Filter Data Table - VIA Admin Amnt" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_13" OutputDataTable="[DT_VIAAdmin_Amnt1]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["Via's admin total"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <Assign DisplayName="Assign - BI Data filter comments" sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[DT_BI_FinalforCons]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[DT_BIData.Select("[LMALA Comments]='Consider'").CopyToDataTable]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:FilterDataTable DataTable="[DT_BI_FinalforCons]" DisplayName="Filter Data Table -DT_BI_ConsolidatedCountry" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[DT_BI_ConsolidatedCountry]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String" xml:space="preserve">["HQ  Country2"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <Assign sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[DT_BICons_Country_Final]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[DT_BI_ConsolidatedCountry]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:FilterDataTable DataTable="[DT_BI_FinalforCons]" DisplayName="Filter Data Table -DT_BI_ConsolidatedCountryamnt" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[DT_BI_ConsolidatedCountry_Amount]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["License Revenue"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <Assign sap:VirtualizedContainerService.HintSize="522,62" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[DT_BICons_Amnt_Final]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[DT_BI_ConsolidatedCountry_Amount]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:WriteRange AddHeaders="False" DataTable="[in_VIAPivot]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="522,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" StartingCell="A1" WorkbookPath="ViaPivot.xlsx" />
+            <ui:FilterDataTable DataTable="[in_VIAPivot]" DisplayName="Filter Data Table - VIA1" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_3" OutputDataTable="[DT_VIA1]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["Column0"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <ui:WriteRange AddHeaders="False" DataTable="[DT_VIA1]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="522,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Sheet2" StartingCell="A1" WorkbookPath="ViaPivot.xlsx" />
+            <ui:FilterDataTable DataTable="[in_VIAPivot]" DisplayName="Filter Data Table - VIA2" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_4" OutputDataTable="[DT_VIA2]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument Column="{x:Null}" Operand="{x:Null}" BooleanOperator="And" Operator="LT" />
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["Column1"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <ui:WriteRange AddHeaders="False" DataTable="[DT_VIA2]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="522,114.666666666667" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="Sheet3" StartingCell="A1" WorkbookPath="ViaPivot.xlsx" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_ReservesCountry]" DisplayName="Write Range - Country 1" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_4" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="A2" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_ReservesAmnt]" DisplayName="Write Range - Amnt 1" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="C2" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[DT_BICons_Country_Final]" DisplayName="For Each Row - BI Country" sap:VirtualizedContainerService.HintSize="522,314.666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="434,194" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                    <TryCatch.Try>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,253.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="sd:DataTable">[dt_Temp]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="sd:DataTable" xml:space="preserve">[DT_CountryLookup.Select("Code='"+row.Item("HQ  Country2").ToString+"'").CopyToDataTable]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object" xml:space="preserve">[row.Item("HQ  Country2")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">[dt_Temp.Rows(0).Item("Country").ToString]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                          </ActivityAction.Argument>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[exception.Message+&quot; &quot;+row.Item(&quot;HQ  Country2&quot;).ToString]" />
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEachRow>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_BICons_Country_Final]" DisplayName="Write Range - Country 2" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_6" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;A&quot;+(DT_ReservesCountry.rows.Count+2).ToString]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_BICons_Amnt_Final]" DisplayName="Write Range - Amnt2" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_7" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;C&quot;+(DT_ReservesCountry.rows.Count+2).ToString]" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[DT_VIA1]" DisplayName="For Each Row - VIA 1" sap:VirtualizedContainerService.HintSize="522,314.666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="434,194" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                    <TryCatch.Try>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_7">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="sd:DataTable">[dt_Temp]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="sd:DataTable">[DT_CountryLookup.Select("Code='"+row.Item("Column0").ToString+"'").CopyToDataTable]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_8">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[row.Item("Column0")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">[dt_Temp.Rows(0).Item("Country").ToString]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                          </ActivityAction.Argument>
+                          <Sequence sap:VirtualizedContainerService.HintSize="376,186.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[exception.Message+&quot; &quot;+row.Item(&quot;Column0&quot;).ToString]" />
+                          </Sequence>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEachRow>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_VIA1]" DisplayName="Write Range - Country 3" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_8" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;A&quot;+(DT_ReservesCountry.rows.Count+DT_BICons_Country_Final.rows.Count+2).ToString]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_VIA2]" DisplayName="Write Range - Amnt3" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_9" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;C&quot;+(DT_ReservesCountry.rows.Count+DT_BICons_Country_Final.rows.Count+2).ToString]" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[DT_VIAAdmin]" DisplayName="For Each Row - VIA Admin" sap:VirtualizedContainerService.HintSize="522,614.666666666667" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="438.666666666667,494" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                    <TryCatch.Try>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,256" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_9">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="sd:DataTable">[dt_Temp]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="sd:DataTable">[DT_CountryLookup.Select("Code='"+row.Item("Column1").ToString+"'").CopyToDataTable]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_10">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[row.Item("Column1")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">[dt_Temp.Rows(0).Item("Country").ToString]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404.666666666667,22" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                          </ActivityAction.Argument>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[exception.Message+&quot; &quot;+row.Item(&quot;Column1&quot;).ToString]" />
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                  </TryCatch>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEachRow>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_VIAAdmin_Country1]" DisplayName="Write Range - Country 4" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_10" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;A&quot;+(DT_ReservesCountry.rows.Count+DT_BICons_Country_Final.rows.Count+DT_VIA1.rows.Count+2).ToString]" />
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_VIAAdmin_Amnt1]" DisplayName="Write Range - Ant 4" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_11" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="[&quot;C&quot;+(DT_ReservesCountry.rows.Count+DT_BICons_Country_Final.rows.Count+DT_VIA1.rows.Count+2).ToString]" />
+            <ui:ExcelSetRangeColor Color="[System.Drawing.Color.Yellow]" DisplayName="Set Range Color - reserves" sap:VirtualizedContainerService.HintSize="522,190" sap2010:WorkflowViewState.IdRef="ExcelSetRangeColor_4" Range="[&quot;C2:C&quot;+(int_reservesCount+1).ToString]" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelSetRangeColor Color="[system.Drawing.Color.LightGray]" DisplayName="Set Range Color - BI data" sap:VirtualizedContainerService.HintSize="522,190" sap2010:WorkflowViewState.IdRef="ExcelSetRangeColor_1" Range="[&quot;C&quot;+(int_reservesCount+2).tostring+&quot;:C&quot;+(int_reservesCount+DT_BI_ConsolidatedCountry_Amount.Rows.Count+1).tostring]" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelSetRangeColor Color="[system.Drawing.Color.LightGreen]" DisplayName="Set Range Color - VIA BI+E" sap:VirtualizedContainerService.HintSize="522,190" sap2010:WorkflowViewState.IdRef="ExcelSetRangeColor_2" Range="[&quot;C&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.Rows.Count+2).tostring+&quot;:C&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+1).tostring]" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelSetRangeColor Color="[system.Drawing.Color.LightSkyBlue]" DisplayName="Set Range Color - VIA Admin" sap:VirtualizedContainerService.HintSize="522,190" sap2010:WorkflowViewState.IdRef="ExcelSetRangeColor_3" Range="[&quot;C&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+2).tostring+&quot;:C&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+DT_VIAAdmin_Amnt1.rows.Count+1).tostring]" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="522,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,178.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelRefreshPivotTable DisplayName="Refresh Pivot Table  - Pivot" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelRefreshPivotTable_1" SheetName="[in_config(&quot;LIC_REV_GEO_Pivot_SheetName&quot;).ToString]" TableName="[in_config(&quot;LIC_REV_GEO_PivotName&quot;).ToString]" />
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+            <ui:ExcelWriteCell Cell="[&quot;B2:B&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+DT_VIAAdmin_Amnt1.rows.Count+1).tostring]" DisplayName="Write Cell Excel slide category" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" Text="=VLOOKUP(@A:A,$E$4:$F$90,2,FALSE)" />
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="522,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,150.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelReadRange AddHeaders="False" DataTable="[DT_ConsolidationPivot]" DisplayName="Read Range - Pivot 1" sap:VirtualizedContainerService.HintSize="334,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_15" Range="A3" SheetName="[in_config(&quot;LIC_REV_GEO_Pivot_SheetName&quot;).ToString]" />
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+            <Delay DisplayName="Delay - 2 mins" Duration="00:01:00" sap:VirtualizedContainerService.HintSize="522,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+            <ui:ExcelSelectRange DisplayName="Select Range - Pivot" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelSelectRange_1" Range="A3" SheetName="[in_config(&quot;LIC_REV_GEO_Pivot_SheetName&quot;).ToString]" />
+            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="consolidation Attach Window 'EXCEL.EXE G-I.'" sap:VirtualizedContainerService.HintSize="522,1156" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="3ae8a7a99bdf5290d5e39f110daebda9" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='*' /&gt;">
+              <ui:WindowScope.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,1010" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'Tab Item  Home'" sap:VirtualizedContainerService.HintSize="434,106" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                      <ui:Click.CursorPosition>
+                        <ui:CursorPosition Position="Center">
+                          <ui:CursorPosition.OffsetX>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetX>
+                          <ui:CursorPosition.OffsetY>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetY>
+                        </ui:CursorPosition>
+                      </ui:Click.CursorPosition>
+                      <ui:Click.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d906ba5a-a06a-4927-bf47-d9d036ee4255" InformativeScreenshot="cf449edb2799b6dd8cefa4da1e084d4e" Selector="&lt;uia cls='MsoCommandBar' helpText='Ribbon toolbar' /&gt;&lt;uia cls='NetUIPanViewer' name='Ribbon Tabs' /&gt;&lt;uia cls='NetUIRibbonTab' name='Home' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:Click.Target>
+                    </ui:Click>
+                    <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Send Hotkey" sap:VirtualizedContainerService.HintSize="434,117.333333333333" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="jtid" KeyModifiers="Alt" SpecialKey="False">
+                      <ui:SendHotkey.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="9e5b16b4-c292-41d5-b4b1-faa94af75c90">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SendHotkey.Target>
+                    </ui:SendHotkey>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Consolidation!$B$1:$C$&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+DT_VIAAdmin_Amnt1.rows.Count+1).tostring]" />
+                    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'EXCEL.EXE Change'" sap:VirtualizedContainerService.HintSize="434,480" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="6e2e7faf0ded5285d723c1db65ef31dd" Selector="&lt;wnd app='excel.exe' cls='bosa_sdm_XL9' title='Change PivotTable Data Source' /&gt;">
+                      <ui:WindowScope.Body>
+                        <ActivityAction x:TypeArguments="x:Object">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                          </ActivityAction.Argument>
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,334" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into 'EDTBX'" sap:VirtualizedContainerService.HintSize="334,96" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[&quot;Consolidation!$B$1:$C$&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+DT_VIAAdmin_Amnt1.rows.Count+1).tostring]">
+                              <ui:TypeInto.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ea7d7109-6250-44b9-bde4-e82d2a888e5f" Selector="&lt;wnd aaname='*' cls='EDTBX' /&gt;">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:TypeInto.Target>
+                            </ui:TypeInto>
+                            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click 'push button  OK'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                              <ui:Click.CursorPosition>
+                                <ui:CursorPosition Position="Center">
+                                  <ui:CursorPosition.OffsetX>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:CursorPosition.OffsetX>
+                                  <ui:CursorPosition.OffsetY>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:CursorPosition.OffsetY>
+                                </ui:CursorPosition>
+                              </ui:Click.CursorPosition>
+                              <ui:Click.Target>
+                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9444687c-a6b5-44bb-8b33-46ec9c7d97eb" InformativeScreenshot="dcdb4f37ee71104ae6401d82f6eff22c" Selector="&lt;ctrl name='OK' role='push button' /&gt;">
+                                  <ui:Target.TimeoutMS>
+                                    <InArgument x:TypeArguments="x:Int32" />
+                                  </ui:Target.TimeoutMS>
+                                  <ui:Target.WaitForReady>
+                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                  </ui:Target.WaitForReady>
+                                </ui:Target>
+                              </ui:Click.Target>
+                            </ui:Click>
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:WindowScope.Body>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:WindowScope>
+                  </Sequence>
+                </ActivityAction>
+              </ui:WindowScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:WindowScope>
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[DT_ConsolidationPivot]" DisplayName="Read Range - Pivot" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_7" Range="A4" SheetName="[in_config(&quot;LIC_REV_GEO_Pivot_SheetName&quot;).ToString]" />
+            <ui:FilterDataTable DataTable="[DT_ConsolidationPivot]" DisplayName="Filter Data Table - Consolidation Pivot" FilterRowsMode="Remove" sap:VirtualizedContainerService.HintSize="522,162.666666666667" sap2010:WorkflowViewState.IdRef="FilterDataTable_14" OutputDataTable="[DT_ConsolidationPivot]" SelectColumnsMode="Keep">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument BooleanOperator="And" Operator="EQ">
+                    <ui:FilterOperationArgument.Column>
+                      <InArgument x:TypeArguments="x:String">["Column0"]</InArgument>
+                    </ui:FilterOperationArgument.Column>
+                    <ui:FilterOperationArgument.Operand>
+                      <InArgument x:TypeArguments="x:String">["Grand Total"]</InArgument>
+                    </ui:FilterOperationArgument.Operand>
+                  </ui:FilterOperationArgument>
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <InArgument x:TypeArguments="x:String">["Column0"]</InArgument>
+                  <InArgument x:TypeArguments="x:String">["Column1"]</InArgument>
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+            <ui:ExcelWriteRange AddHeaders="False" DataTable="[DT_ConsolidationPivot]" DisplayName="Write Range - consolidation Pivot to consol tab" sap:VirtualizedContainerService.HintSize="522,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" StartingCell="H5" />
+            <ui:Comment sap:VirtualizedContainerService.HintSize="522,55.3333333333333" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Ad changes here (-1 +1)logic&#xA;" />
+            <ui:ExcelReadCell Cell="L44" DisplayName="Read Cell - L44" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:Double">[str_L44_Total]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="N44" DisplayName="Read Cell - N44" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="x:Double">[str_N44_Total]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <If Condition="[Convert.toInt32(Math.Round(str_L44_Total/1000)-str_N44_Total)=0]" sap:VirtualizedContainerService.HintSize="522,391.333333333333" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="376,240.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelWriteCell Cell="N7" DisplayName="Write Cell - N7" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" Text="[&quot;=ROUND(M8,0)-SUM(N5:N6)+&quot;+Convert.toInt32(Math.Round(str_L44_Total/1000)-str_N44_Total).ToString]" />
+                  <ui:ExcelSetRangeColor Color="[System.Drawing.Color.Yellow]" DisplayName="Set Range Color" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ExcelSetRangeColor_5" Range="N7" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[out_ConsolidatedData]" DisplayName="Read Range - Consolidated data" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_13" Range="[&quot;A1:C&quot;+(int_Reservescount+DT_BI_ConsolidatedCountry_Amount.rows.Count+DT_VIA1.rows.Count+DT_VIAAdmin_Amnt1.rows.Count+1).tostring]" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[out_DT1]" DisplayName="Read Range - DT1" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_8" Range="N5:N7" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[out_DT2]" DisplayName="Read Range - DT2" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_9" Range="N12:N17" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[out_DT3]" DisplayName="Read Range - DT3" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_10" Range="N22:N35" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[out_DT4]" DisplayName="Read Range - DT4" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_11" Range="N39" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:ExcelReadRange AddHeaders="False" DataTable="[out_DT5]" DisplayName="Read Range - DT5" sap:VirtualizedContainerService.HintSize="522,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadRange_12" Range="N42" SheetName="[in_config(&quot;LIC_REV_GEO_Consol_SheetName&quot;).ToString]" />
+            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'EXCEL.EXE G-I.'" sap:VirtualizedContainerService.HintSize="522,393.333333333333" sap2010:WorkflowViewState.IdRef="WindowScope_3" InformativeScreenshot="3e05f5456a8625a0d5f00932427e6e01" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='*' /&gt;">
+              <ui:WindowScope.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,247.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'Title Bar'" sap:VirtualizedContainerService.HintSize="334,155.333333333333" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="s" KeyModifiers="Ctrl">
+                      <ui:SendHotkey.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="b0fe661e-ba2c-4ad0-a13d-801463627073" InformativeScreenshot="5a679e7cf0c300770ec362d3efecc387">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SendHotkey.Target>
+                    </ui:SendHotkey>
+                  </Sequence>
+                </ActivityAction>
+              </ui:WindowScope.Body>
+            </ui:WindowScope>
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+  </Sequence>
+</Activity>
